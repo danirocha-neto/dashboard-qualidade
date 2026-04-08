@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Qualidade</title>
+<style>
+:root {
+  --bg:#161614;--surface:#202020;--surface2:#1a1a18;
+  --border:rgba(255,255,255,.08);--text:#eeece6;--muted:#86847c;
+  --green:#1a8f68;--blue:#1558a0;--amber:#a86a10;--red:#922828;
+  --purple:#4a42a8;--radius:12px;--qual-bg:#1e1a2a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI',system-ui,sans-serif;
+  font-size:11px;line-height:1.3;padding:8px 14px;max-width:1400px;margin:0 auto;}
+header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+h1{font-size:14px;font-weight:700;letter-spacing:-.3px;}
+.sub{font-size:9.5px;color:var(--muted);margin-top:1px;}
+.badge{font-size:9.5px;background:var(--surface);border:.5px solid var(--border);border-radius:20px;padding:2px 9px;color:var(--muted);}
+.section-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px;padding-left:2px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:.5px;background:var(--border);}
+.section-quantitativa{margin-bottom:8px;}
+.section-qualitativa{background:var(--qual-bg);border-radius:12px;padding:8px 12px 10px;margin-bottom:8px;}
+.metrics-row{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px;}
+.metric{background:var(--surface);border:.5px solid var(--border);border-radius:var(--radius);padding:5px 9px;}
+.metric-label{font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:1px;}
+.metric-value{font-size:17px;font-weight:700;letter-spacing:-1px;line-height:1;}
+.metric-sub{font-size:8px;color:var(--muted);margin-top:1px;}
+.m-blue .metric-value{color:var(--blue);}.m-green .metric-value{color:var(--green);}
+.m-purple .metric-value{color:var(--purple);}.m-amber .metric-value{color:var(--amber);}
+.m-pos .metric-value{color:var(--green);}.m-neg .metric-value{color:var(--red);}
+.main-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:8px;align-items:start;}
+.col-left{display:flex;flex-direction:column;gap:8px;}
+.col-right{display:flex;flex-direction:column;}
+.card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.card-header{display:flex;align-items:center;gap:5px;padding:5px 10px;border-bottom:.5px solid var(--border);background:var(--surface2);flex-wrap:wrap;}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.d-blue{background:var(--blue);}.d-green{background:var(--green);}
+.d-amber{background:var(--amber);}.d-purple{background:var(--purple);}
+.card-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);}
+.periodo-filter{display:flex;gap:0;margin-left:auto;}
+.pf-btn{padding:2px 7px;font-size:9px;font-weight:600;border:.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s;}
+.pf-btn:first-child{border-radius:4px 0 0 4px;}.pf-btn:last-child{border-radius:0 4px 4px 0;}
+.pf-btn:not(:first-child){border-left:none;}.pf-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+.tipo-filter{display:flex;gap:3px;flex-wrap:wrap;margin-left:auto;}
+.tf-btn{padding:2px 6px;font-size:9px;font-weight:600;border:.5px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.tf-btn.active{background:var(--amber);color:#fff;border-color:var(--amber);}
+.meta-selector{display:flex;align-items:center;gap:5px;margin-left:auto;}
+.meta-selector label{font-size:8.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;}
+.meta-selector select{padding:2px 6px;font-size:9px;border:.5px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;cursor:pointer;outline:none;}
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:10px;}
+thead{background:var(--surface2);}
+th{padding:3px 7px;text-align:left;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);white-space:nowrap;}
+th.r{text-align:right;}th.sep{border-left:.5px solid var(--border);}
+td{padding:4px 7px;border-top:.5px solid var(--border);white-space:nowrap;}
+tr:hover td{background:var(--surface2);}
+.tl{font-weight:500;}.tr{text-align:right;font-variant-numeric:tabular-nums;}
+.tz{color:var(--muted);text-align:right;}.sep{border-left:.5px solid var(--border);}
+.c-g{color:var(--green);font-weight:600;}.c-r{color:var(--red);font-weight:600;}
+.tr-total td{font-weight:600;background:var(--surface2);border-top:1px solid var(--border);}
+.tbl-marcas-wrap{overflow-x:auto;overflow-y:auto;}
+.tbl-marcas-wrap thead th{position:sticky;top:0;z-index:2;background:var(--surface2);}
+.tbl-marcas-wrap .tr-total td{position:sticky;bottom:0;z-index:1;background:var(--surface2);}
+.conf-cell{display:flex;align-items:center;gap:4px;}
+.bola{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.bola-red{background:var(--red);}.bola-ok{background:transparent;border:1.5px solid var(--green);}
+.conf-pct{font-size:10px;font-weight:600;}.conf-red{color:var(--red);}.conf-ok{color:var(--green);}
+.conf-na{color:var(--muted);font-size:9px;font-weight:400;}
+.plano-cell{min-width:120px;max-width:155px;white-space:normal;}
+.plano-input{width:100%;padding:2px 5px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;line-height:1.3;resize:none;outline:none;min-height:22px;transition:border-color .15s;}
+.plano-input:focus{border-color:var(--blue);background:var(--surface);}
+.plano-input::placeholder{color:var(--muted);}
+.bar-wrap{display:flex;align-items:center;gap:4px;}
+.bar-bg{flex:1;height:3px;background:var(--surface2);border-radius:3px;overflow:hidden;min-width:30px;}
+.bar-fill{height:100%;border-radius:3px;transition:width .3s,background .3s;}
+.bar-pct{font-size:9px;font-weight:600;min-width:30px;text-align:right;}
+.qual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.qual-bloco{display:flex;flex-direction:column;gap:5px;}
+.qual-bloco-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px;padding-bottom:4px;border-bottom:.5px solid var(--border);}
+.qual-pos-title{color:var(--green);}.qual-neg-title{color:var(--red);}
+.qual-filters{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.qual-filter-input{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;transition:border-color .15s;}
+.qual-filter-input:focus{border-color:var(--blue);}
+.qual-filter-input::placeholder{color:var(--muted);}
+.qual-filter-date{width:115px;}.qual-filter-name{flex:1;min-width:90px;}
+.qual-filter-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);white-space:nowrap;}
+.behavior-list{overflow-y:auto;max-height:130px;display:flex;flex-direction:column;gap:4px;padding-right:2px;}
+.behavior-entry{background:var(--surface);border:.5px solid var(--border);border-radius:6px;padding:5px 7px;display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
+.behavior-meta{display:grid;grid-template-columns:1fr 110px auto;gap:4px;align-items:center;}
+.behavior-field{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;transition:border-color .15s;width:100%;}
+.behavior-field:focus{border-color:var(--blue);}
+.behavior-field::placeholder{color:var(--muted);}
+.behavior-date{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;width:100%;transition:border-color .15s;}
+.behavior-date:focus{border-color:var(--blue);}
+.remove-btn{padding:1px 6px;font-size:10px;border:.5px solid var(--border);border-radius:4px;background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap;height:22px;}
+.remove-btn:hover{border-color:var(--red);color:var(--red);}
+.behavior-desc{width:100%;padding:3px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;resize:none;outline:none;min-height:28px;line-height:1.3;transition:border-color .15s;}
+.behavior-desc:focus{border-color:var(--blue);}
+.behavior-desc::placeholder{color:var(--muted);}
+.add-btn{align-self:flex-start;padding:2px 8px;font-size:10px;font-weight:600;color:var(--blue);background:transparent;border:.5px solid var(--blue);border-radius:4px;cursor:pointer;transition:background .15s;font-family:inherit;}
+.add-btn:hover{background:rgba(21,88,160,.07);}
+.add-btn.neg{color:var(--red);border-color:var(--red);}
+.add-btn.neg:hover{background:rgba(146,40,40,.07);}
+.obs-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:2px;}
+.obs-box{width:100%;padding:4px 7px;border:.5px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;resize:vertical;outline:none;min-height:28px;line-height:1.4;transition:border-color .15s;}
+.obs-box:focus{border-color:var(--blue);}
+.obs-box::placeholder{color:var(--muted);}
+.no-results{font-size:10px;color:var(--muted);padding:6px 4px;text-align:center;}
+footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Dashboard de Qualidade</h1>
+    <div class="sub">Referência: <strong>06/04/2026</strong> &nbsp;·&nbsp; D-1 = 06/04 &nbsp;·&nbsp; D-7 desde 30/03 &nbsp;·&nbsp; D-30 desde 07/03</div>
+  </div>
+  <div class="badge">📊 736 auditorias · 06/04/2026</div>
+</header>
+
+<div class="section-quantitativa">
+<div class="section-label">Dados Quantitativos</div>
+<div class="metrics-row">
+  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">28</div><div class="metric-sub">Hoje · 06/04</div></div>
+  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">198</div><div class="metric-sub">Últimos 7 dias</div></div>
+  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">729</div><div class="metric-sub">Últimos 30 dias</div></div>
+  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">736</div><div class="metric-sub">Aba Auditorias</div></div>
+  <div class="metric"><div class="metric-label">Planos de Ação</div><div class="metric-value" id="contador-planos">0</div><div class="metric-sub">preenchidos</div></div>
+  <div class="metric m-pos"><div class="metric-label">Comportamentos +</div><div class="metric-value" id="contador-pos">0</div><div class="metric-sub">positivos</div></div>
+  <div class="metric m-neg"><div class="metric-label">Comportamentos −</div><div class="metric-value" id="contador-neg">0</div><div class="metric-sub">negativos</div></div>
+</div>
+
+<div class="main-grid">
+<div class="col-left">
+
+  <div class="card">
+    <div class="card-header"><div class="dot d-blue"></div><div class="card-title">Quantidade por Tipo de Auditoria</div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Tipo</th><th class="r">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th></tr></thead>
+      <tbody>
+        <tr><td class="tl">Ligação</td><td class="tr">18</td><td class="tr sep">160</td><td class="tr sep">399</td></tr>
+        <tr><td class="tl">Spread.Chat</td><td class="tz">—</td><td class="tr sep">14</td><td class="tr sep">171</td></tr>
+        <tr><td class="tl">Volumetria</td><td class="tz">—</td><td class="tz sep">—</td><td class="tr sep">111</td></tr>
+        <tr><td class="tl">Lead Time</td><td class="tr">6</td><td class="tr sep">20</td><td class="tr sep">37</td></tr>
+        <tr><td class="tl">Cadência</td><td class="tz">—</td><td class="tz sep">—</td><td class="tr sep">7</td></tr>
+        <tr><td class="tl">Sem Tipo</td><td class="tr">4</td><td class="tr sep">4</td><td class="tr sep">48</td></tr>
+        <tr class="tr-total"><td>Total</td><td class="tr">28</td><td class="tr sep">198</td><td class="tr sep">729</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="dot d-green"></div><div class="card-title">Conformidade por Tipo</div>
+      <div class="periodo-filter">
+        <button class="pf-btn" onclick="setConf('d1')" id="btn-d1">D-1</button>
+        <button class="pf-btn" onclick="setConf('d7')" id="btn-d7">D-7</button>
+        <button class="pf-btn active" onclick="setConf('d30')" id="btn-d30">D-30</button>
+      </div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>Tipo</th><th class="r">Total</th>
+        <th class="r sep" style="color:var(--green)">Conforme</th>
+        <th class="r sep" style="color:var(--red)">Não Conforme</th>
+      </tr></thead>
+      <tbody id="tbody-conf"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="dot d-purple"></div>
+      <div class="card-title">Média de Ligações por Diretoria</div>
+      <div class="meta-selector">
+        <label>Meta:</label>
+        <select id="select-meta" onchange="setMeta(this.value)">
+          <option value="120">120 ligações</option>
+          <option value="200" selected>200 ligações</option>
+        </select>
+      </div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>Diretoria</th>
+        <th class="r">Méd. D-7</th><th class="r">% Meta</th>
+        <th class="r sep">Méd. D-30</th><th class="r">% Meta</th>
+      </tr></thead>
+      <tbody id="tbody-dir"></tbody>
+    </table></div>
+  </div>
+
+</div>
+
+<div class="col-right">
+  <div class="card" id="card-marcas">
+    <div class="card-header">
+      <div class="dot d-amber"></div>
+      <div class="card-title">Auditorias por Marca · Conformidade D-30</div>
+      <div class="tipo-filter">
+        <button class="tf-btn active" onclick="setTipo('Ligacao')" id="tf-Ligacao">Ligação</button>
+        <button class="tf-btn" onclick="setTipo('SpreadChat')" id="tf-SpreadChat">Spread.Chat</button>
+        <button class="tf-btn" onclick="setTipo('Volumetria')" id="tf-Volumetria">Volumetria</button>
+        <button class="tf-btn" onclick="setTipo('LeadTime')" id="tf-LeadTime">Lead Time</button>
+        <button class="tf-btn" onclick="setTipo('Cadencia')" id="tf-Cadencia">Cadência</button>
+        <button class="tf-btn" onclick="setTipo('geral')" id="tf-geral">Geral</button>
+      </div>
+    </div>
+    <div class="tbl-marcas-wrap" id="tbl-marcas-wrap">
+      <table>
+        <thead><tr>
+          <th>Marca</th>
+          <th class="r">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th>
+          <th class="sep" id="th-conf">Conformidade · Ligação</th>
+          <th class="sep" style="color:var(--amber)">Plano de Ação</th>
+        </tr></thead>
+        <tbody id="tbody-marcas"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="section-qualitativa">
+<div class="section-label" style="margin-bottom:8px;">Análise Qualitativa de Comportamento</div>
+<div class="qual-grid">
+  <div class="qual-bloco">
+    <div class="qual-bloco-title qual-pos-title">
+      <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="var(--green)" stroke-width="1.2"/><path d="M3 6l2 2 4-4" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Comportamentos Positivos
+    </div>
+    <div class="qual-filters">
+      <span class="qual-filter-label">Filtrar:</span>
+      <input type="text" class="qual-filter-input qual-filter-name" id="f-pos-nome" placeholder="Por colaborador..." oninput="renderEntries('positivos')">
+      <input type="date" class="qual-filter-input qual-filter-date" id="f-pos-data" oninput="renderEntries('positivos')">
+    </div>
+    <div class="behavior-list" id="lista-positivos"></div>
+    <div id="no-pos" class="no-results" style="display:none;">Nenhum registro encontrado.</div>
+    <button class="add-btn" onclick="addEntry('positivos')">+ Adicionar comportamento</button>
+    <div><div class="obs-label">Observações gerais</div><textarea class="obs-box" id="obs-positivo" placeholder="Observações gerais sobre comportamentos positivos..."></textarea></div>
+  </div>
+  <div class="qual-bloco">
+    <div class="qual-bloco-title qual-neg-title">
+      <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="var(--red)" stroke-width="1.2"/><path d="M4 4l4 4M8 4l-4 4" stroke="var(--red)" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Comportamentos Negativos
+    </div>
+    <div class="qual-filters">
+      <span class="qual-filter-label">Filtrar:</span>
+      <input type="text" class="qual-filter-input qual-filter-name" id="f-neg-nome" placeholder="Por colaborador..." oninput="renderEntries('negativos')">
+      <input type="date" class="qual-filter-input qual-filter-date" id="f-neg-data" oninput="renderEntries('negativos')">
+    </div>
+    <div class="behavior-list" id="lista-negativos"></div>
+    <div id="no-neg" class="no-results" style="display:none;">Nenhum registro encontrado.</div>
+    <button class="add-btn neg" onclick="addEntry('negativos')">+ Adicionar comportamento</button>
+    <div><div class="obs-label">Observações gerais</div><textarea class="obs-box" id="obs-negativo" placeholder="Observações gerais sobre comportamentos negativos..."></textarea></div>
+  </div>
+</div>
+</div>
+
+<footer>Gerado em 06/04/2026 · Dashboard de Qualidade · 736 auditorias</footer>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey:"AIzaSyBZQPAI_iae5FxROXfBH3TK3yqwJuRlRws",
+  authDomain:"dashboard-qualidade-f96d2.firebaseapp.com",
+  projectId:"dashboard-qualidade-f96d2",
+  storageBucket:"dashboard-qualidade-f96d2.firebasestorage.app",
+  messagingSenderId:"574600100930",
+  appId:"1:574600100930:web:b9c5cc2717abd5873541db"
+});
+const db = getFirestore(app);
+const _c = {};
+
+async function fbSave(k,v){_c[k]=v;try{await setDoc(doc(db,'dashboard',k),{value:v});}catch(e){}}
+async function fbLoad(k,def=''){
+  if(_c[k]!==undefined)return _c[k];
+  try{const s=await getDoc(doc(db,'dashboard',k));const v=s.exists()?s.data().value:def;_c[k]=v;return v;}catch(e){return def;}
+}
+
+/* ===== CONFORMIDADE POR TIPO ===== */
+const confData = {
+  d1:[
+    {tipo:'Ligação',     total:18,  conf:null, nao:null},
+    {tipo:'Spread.Chat', total:0,   conf:null, nao:null},
+    {tipo:'Volumetria',  total:0,   conf:null, nao:null},
+    {tipo:'Lead Time',   total:6,   conf:null, nao:null},
+    {tipo:'Cadência',    total:0,   conf:null, nao:null},
+  ],
+  d7:[
+    {tipo:'Ligação',     total:160, conf:90.6, nao:7.5},
+    {tipo:'Spread.Chat', total:14,  conf:0.0,  nao:100.0},
+    {tipo:'Volumetria',  total:0,   conf:null, nao:null},
+    {tipo:'Lead Time',   total:20,  conf:0.0,  nao:75.0},
+    {tipo:'Cadência',    total:0,   conf:null, nao:null},
+  ],
+  d30:[
+    {tipo:'Ligação',     total:399, conf:74.9, nao:21.6},
+    {tipo:'Spread.Chat', total:171, conf:32.7, nao:67.3},
+    {tipo:'Volumetria',  total:111, conf:0.9,  nao:99.1},
+    {tipo:'Lead Time',   total:37,  conf:0.0,  nao:86.5},
+    {tipo:'Cadência',    total:7,   conf:0.0,  nao:100.0},
+  ]
+};
+function fmtN(n,t){
+  if(n===null)return '<span class="tz">—</span>';
+  const v=n.toFixed(1).replace('.',',')+'%';
+  return t==='conf'?`<span class="c-g">${v}</span>`:(n>0?`<span class="c-r">${v}</span>`:'<span class="tz">—</span>');
+}
+function renderConf(p){
+  ['d1','d7','d30'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===p));
+  document.getElementById('tbody-conf').innerHTML=confData[p].map(r=>`
+    <tr><td class="tl">${r.tipo}</td>
+    <td class="tr">${r.total>0?r.total:'<span class="tz">—</span>'}</td>
+    <td class="sep">${fmtN(r.conf,'conf')}</td>
+    <td class="sep">${fmtN(r.nao,'nao')}</td></tr>`).join('');
+}
+window.setConf=p=>renderConf(p);
+renderConf('d30');
+
+/* ===== DIRETORIAS ===== */
+const dirData={'Fúria':{d7:167.7,d30:156.4},'Guardiões':{d7:139.2,d30:126.7},'Camaleões':{d7:114.7,d30:108.6}};
+let metaAtual=200;
+function renderDir(){
+  document.getElementById('tbody-dir').innerHTML=Object.entries(dirData).map(([d,v])=>{
+    function bc(val,sep=false){
+      if(!val)return`<td class="${sep?'sep ':''}tz">—</td><td>—</td>`;
+      const pct=Math.min(val/metaAtual*100,100),col=pct>=70?'var(--amber)':'var(--red)';
+      return`<td class="tr${sep?' sep':''}">${val.toFixed(1).replace('.',',')}</td>
+        <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${pct.toFixed(1)}%;background:${col}"></div></div>
+        <span class="bar-pct" style="color:${col}">${pct.toFixed(1).replace('.',',')}%</span></div></td>`;
+    }
+    return`<tr><td class="tl">${d}</td>${bc(v.d7)}${bc(v.d30,true)}</tr>`;
+  }).join('');
+}
+window.setMeta=v=>{metaAtual=parseInt(v);renderDir();};
+renderDir();
+
+/* ===== MARCAS ===== */
+const marcasData=[
+  {nome:"Ecoville",d1:7,d7:43,d30:118,key:"pa-Ecoville"},
+  {nome:"Airlocker",d1:0,d7:18,d30:65,key:"pa-Airlocker"},
+  {nome:"Maria Lavadeira",d1:2,d7:14,d30:65,key:"pa-MariaLavadeira"},
+  {nome:"Fast Tennis",d1:5,d7:23,d30:59,key:"pa-FastTennis"},
+  {nome:"Asia Source",d1:0,d7:16,d30:45,key:"pa-AsiaSource"},
+  {nome:"Locar X",d1:0,d7:14,d30:45,key:"pa-LocarX"},
+  {nome:"La Bolaria",d1:0,d7:10,d30:44,key:"pa-LaBolaria"},
+  {nome:"Shelf",d1:0,d7:6,d30:43,key:"pa-Shelf"},
+  {nome:"Atend Já",d1:0,d7:5,d30:35,key:"pa-AtendJ"},
+  {nome:"Mestre da Obra",d1:2,d7:9,d30:33,key:"pa-MestredaObra"},
+  {nome:"Saúde Livre",d1:0,d7:12,d30:31,key:"pa-SadeLivre"},
+  {nome:"Brumed",d1:0,d7:8,d30:30,key:"pa-Brumed"},
+  {nome:"Sua Hora Unha",d1:0,d7:1,d30:17,key:"pa-SuaHoraUnha"},
+  {nome:"Suav",d1:0,d7:8,d30:16,key:"pa-Suav"},
+  {nome:"Doctor Fit",d1:0,d7:1,d30:14,key:"pa-DoctorFit"},
+  {nome:"Hermanito",d1:0,d7:1,d30:13,key:"pa-Hermanito"},
+  {nome:"Calzoon",d1:0,d7:0,d30:12,key:"pa-Calzoon"},
+  {nome:"4 Beach",d1:0,d7:1,d30:8,key:"pa-4Beach"},
+  {nome:"Ecoville Lavanderia",d1:0,d7:1,d30:7,key:"pa-EcovilleLavanderia"},
+  {nome:"Lypedepil",d1:0,d7:0,d30:7,key:"pa-Lypedepil"},
+  {nome:"Mentoria",d1:0,d7:0,d30:6,key:"pa-Mentoria"},
+  {nome:"Yang",d1:0,d7:0,d30:2,key:"pa-Yang"},
+  {nome:"Asia",d1:0,d7:0,d30:1,key:"pa-Asia"},
+  {nome:"Pagamos Já",d1:0,d7:0,d30:1,key:"pa-PagamosJ"},
+  {nome:"Mestre da Tintas",d1:0,d7:0,d30:1,key:"pa-MestredaTintas"},
+];
+
+const confLigacao={"Ecoville":{conf:64.8,nao:34.1},"Airlocker":{conf:84.0,nao:8.0},"Maria Lavadeira":{conf:79.5,nao:17.9},"Fast Tennis":{conf:94.1,nao:0.0},"Asia Source":{conf:73.5,nao:23.5},"Locar X":{conf:86.7,nao:13.3},"La Bolaria":{conf:73.1,nao:15.4},"Shelf":{conf:52.9,nao:47.1},"Atend Já":{conf:22.2,nao:66.7},"Mestre da Obra":{conf:83.3,nao:16.7},"Saúde Livre":{conf:71.4,nao:19.0},"Brumed":{conf:89.5,nao:10.5},"Sua Hora Unha":{conf:100.0,nao:0.0},"Suav":{conf:100.0,nao:0.0},"Doctor Fit":{conf:70.0,nao:20.0},"Hermanito":{conf:100.0,nao:0.0},"Calzoon":{conf:100.0,nao:0.0},"4 Beach":{conf:66.7,nao:33.3},"Ecoville Lavanderia":{conf:0.0,nao:100.0},"Lypedepil":{conf:50.0,nao:50.0},"Mentoria":{conf:100.0,nao:0.0},"Yang":null,"Asia":null,"Pagamos Já":null,"Mestre da Tintas":null};
+const confSpreadChat={"Ecoville":{conf:88,nao:12},"Airlocker":{conf:83,nao:17},"Maria Lavadeira":{conf:85,nao:15},"Fast Tennis":{conf:90,nao:10},"Asia Source":{conf:97,nao:3},"Locar X":{conf:93,nao:7},"La Bolaria":{conf:93,nao:7},"Shelf":{conf:85,nao:15},"Atend Já":{conf:95,nao:5},"Mestre da Obra":{conf:94,nao:6},"Saúde Livre":{conf:96,nao:4},"Brumed":{conf:97,nao:3},"Sua Hora Unha":{conf:94,nao:6},"Suav":{conf:97,nao:3},"Doctor Fit":{conf:100,nao:0},"Hermanito":{conf:98,nao:2},"Calzoon":{conf:100,nao:0},"4 Beach":null,"Ecoville Lavanderia":{conf:100,nao:0},"Lypedepil":null,"Mentoria":{conf:100,nao:0},"Yang":{conf:100,nao:0},"Asia":null,"Pagamos Já":null,"Mestre da Tintas":null};
+const confVolumetria={"Ecoville":{conf:88,nao:12},"Airlocker":{conf:83,nao:17},"Maria Lavadeira":{conf:98,nao:2},"Fast Tennis":{conf:91,nao:9},"Asia Source":{conf:97,nao:3},"Locar X":{conf:96,nao:4},"La Bolaria":{conf:98,nao:2},"Shelf":{conf:91,nao:9},"Atend Já":{conf:88,nao:12},"Mestre da Obra":{conf:91,nao:9},"Saúde Livre":null,"Brumed":{conf:95,nao:5},"Sua Hora Unha":{conf:98,nao:2},"Suav":null,"Doctor Fit":{conf:99,nao:1},"Hermanito":{conf:98,nao:2},"Calzoon":{conf:97,nao:3},"4 Beach":{conf:96,nao:4},"Ecoville Lavanderia":{conf:97,nao:3},"Lypedepil":{conf:97,nao:3},"Mentoria":{conf:98,nao:2},"Yang":null,"Asia":{conf:99,nao:1},"Pagamos Já":{conf:99,nao:1},"Mestre da Tintas":null};
+const confLeadTime={"Ecoville":{conf:99,nao:1},"Airlocker":{conf:97,nao:3},"Maria Lavadeira":{conf:95,nao:5},"Fast Tennis":{conf:95,nao:5},"Asia Source":{conf:99,nao:1},"Locar X":{conf:99,nao:1},"La Bolaria":{conf:97,nao:3},"Shelf":{conf:98,nao:2},"Atend Já":{conf:99,nao:1},"Mestre da Obra":{conf:96,nao:4},"Saúde Livre":{conf:99,nao:1},"Brumed":{conf:99,nao:1},"Sua Hora Unha":null,"Suav":null,"Doctor Fit":null,"Hermanito":{conf:98,nao:2},"Calzoon":null,"4 Beach":null,"Ecoville Lavanderia":null,"Lypedepil":{conf:99,nao:1},"Mentoria":null,"Yang":null,"Asia":null,"Pagamos Já":null,"Mestre da Tintas":{conf:99,nao:1}};
+const confCadencia={"Ecoville":null,"Airlocker":null,"Maria Lavadeira":null,"Fast Tennis":null,"Asia Source":{conf:99,nao:1},"Locar X":null,"La Bolaria":null,"Shelf":null,"Atend Já":{conf:96,nao:4},"Mestre da Obra":null,"Saúde Livre":null,"Brumed":null,"Sua Hora Unha":null,"Suav":null,"Doctor Fit":{conf:99,nao:1},"Hermanito":null,"Calzoon":null,"4 Beach":null,"Ecoville Lavanderia":null,"Lypedepil":{conf:99,nao:1},"Mentoria":null,"Yang":null,"Asia":null,"Pagamos Já":null,"Mestre da Tintas":null};
+const confGeral={"Ecoville":{conf:50.5,nao:49.5},"Airlocker":{conf:55.4,nao:44.6},"Maria Lavadeira":{conf:70.5,nao:29.5},"Fast Tennis":{conf:69.8,nao:30.2},"Asia Source":{conf:75.0,nao:25.0},"Locar X":{conf:70.7,nao:29.3},"La Bolaria":{conf:80.5,nao:19.5},"Shelf":{conf:48.8,nao:51.2},"Atend Já":{conf:41.9,nao:58.1},"Mestre da Obra":{conf:48.5,nao:51.5},"Saúde Livre":{conf:81.5,nao:18.5},"Brumed":{conf:70.0,nao:30.0},"Sua Hora Unha":{conf:70.6,nao:29.4},"Suav":{conf:93.3,nao:6.7},"Doctor Fit":{conf:78.6,nao:21.4},"Hermanito":{conf:66.7,nao:33.3},"Calzoon":{conf:69.2,nao:30.8},"4 Beach":{conf:37.5,nao:62.5},"Ecoville Lavanderia":{conf:28.6,nao:71.4},"Lypedepil":{conf:42.9,nao:57.1},"Mentoria":{conf:66.7,nao:33.3},"Yang":{conf:100,nao:0},"Asia":{conf:0,nao:100},"Pagamos Já":{conf:0,nao:100},"Mestre da Tintas":{conf:100,nao:0}};
+
+const mapaConf={Ligacao:confLigacao,SpreadChat:confSpreadChat,Volumetria:confVolumetria,LeadTime:confLeadTime,Cadencia:confCadencia,geral:confGeral};
+const labelTipo={Ligacao:'Ligação',SpreadChat:'Spread.Chat',Volumetria:'Volumetria',LeadTime:'Lead Time',Cadencia:'Cadência',geral:'Geral'};
+const tiposEsp=['SpreadChat','Volumetria','LeadTime','Cadencia'];
+let tipoAtual='Ligacao';
+
+function confCell(nome,tipo){
+  const d=mapaConf[tipo]?.[nome];
+  if(d===null||d===undefined)return'<div class="conf-cell"><span class="conf-na">Sem dados</span></div>';
+  const esp=tiposEsp.includes(tipo);
+  /* Regra unificada: conf < 90% → vermelho, conf >= 90% → verde */
+  if(d.conf<90){
+    const lbl=esp?`${d.conf}% Conf.`:`${d.nao.toFixed(1).replace('.',',')}% N-C`;
+    return`<div class="conf-cell"><span class="bola bola-red"></span><span class="conf-pct conf-red">${lbl}</span></div>`;
+  }
+  const lbl=esp?`${d.conf}% Conf.`:`${d.conf.toFixed(1).replace('.',',')}% Conf.`;
+  return`<div class="conf-cell"><span class="bola bola-ok"></span><span class="conf-pct conf-ok">${lbl}</span></div>`;
+}
+
+function planoCell(nome,tipo){
+  const d=mapaConf[tipo]?.[nome];
+  if(d===null||d===undefined)return`<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
+  /* Plano de ação só aparece quando conf < 90% */
+  if(d.conf<90){
+    const key=marcasData.find(m=>m.nome===nome)?.key||nome;
+    return`<td class="sep plano-cell"><textarea class="plano-input" data-key="${key}" placeholder="Plano de ação..."></textarea></td>`;
+  }
+  return`<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
+}
+
+function renderMarcas(){
+  const tbody=document.getElementById('tbody-marcas');
+  let t1=0,t7=0,t30=0;
+  tbody.innerHTML=marcasData.map(m=>{
+    t1+=m.d1;t7+=m.d7;t30+=m.d30;
+    return`<tr>
+      <td class="tl">${m.nome}</td>
+      <td>${m.d1>0?m.d1:'<span class="tz">—</span>'}</td>
+      <td class="sep">${m.d7>0?m.d7:'<span class="tz">—</span>'}</td>
+      <td class="sep tr">${m.d30}</td>
+      <td class="sep">${confCell(m.nome,tipoAtual)}</td>
+      ${planoCell(m.nome,tipoAtual)}</tr>`;
+  }).join('');
+  tbody.innerHTML+=`<tr class="tr-total"><td>Total</td><td class="tr">${t1||'—'}</td><td class="tr sep">${t7}</td><td class="tr sep">${t30}</td><td class="sep"></td><td class="sep"></td></tr>`;
+  document.querySelectorAll('.plano-input').forEach(async el=>{
+    const k=el.dataset.key;el.value=await fbLoad(k,'');resize(el);
+    let tm;el.addEventListener('input',()=>{resize(el);clearTimeout(tm);tm=setTimeout(()=>{fbSave(k,el.value);atualizarContador();},600);});
+  });
+  atualizarContador();
+}
+window.setTipo=function(tipo){
+  tipoAtual=tipo;
+  document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tf-'+tipo)?.classList.add('active');
+  document.getElementById('th-conf').textContent='Conformidade · '+labelTipo[tipo];
+  renderMarcas();
+};
+
+/* ===== UTILS ===== */
+function resize(el){el.style.height='auto';el.style.height=Math.max(22,el.scrollHeight)+'px';}
+function atualizarContador(){let n=0;document.querySelectorAll('.plano-input').forEach(el=>{if(el.value.trim())n++;});document.getElementById('contador-planos').textContent=n;}
+function atualizarContadores(){document.getElementById('contador-pos').textContent=Array.isArray(_c['positivos'])?_c['positivos'].length:0;document.getElementById('contador-neg').textContent=Array.isArray(_c['negativos'])?_c['negativos'].length:0;}
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ===== COMPORTAMENTOS ===== */
+function buildEntry(tipo,idx,data){
+  const div=document.createElement('div');div.className='behavior-entry';div.dataset.idx=idx;
+  const today=new Date().toISOString().split('T')[0];
+  div.innerHTML=`<div class="behavior-meta">
+    <input type="text" class="behavior-field" placeholder="Nome do colaborador..." value="${escHtml(data.nome)}" data-field="nome">
+    <input type="date" class="behavior-date" value="${escHtml(data.data||today)}" data-field="data">
+    <button class="remove-btn" onclick="removeEntry('${tipo}',${idx})">✕ Remover</button>
+  </div>
+  <textarea class="behavior-desc" placeholder="Descreva o comportamento observado..." data-field="descricao">${escHtml(data.descricao)}</textarea>`;
+  let tm;div.querySelectorAll('[data-field]').forEach(el=>el.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>saveEntries(tipo),600);}));
+  return div;
+}
+function renderEntries(tipo){
+  const lista=document.getElementById('lista-'+tipo);
+  const noRes=document.getElementById('no-'+(tipo==='positivos'?'pos':'neg'));
+  const entries=_c[tipo]||[];
+  const fN=(document.getElementById('f-'+(tipo==='positivos'?'pos':'neg')+'-nome')?.value||'').toLowerCase().trim();
+  const fD=document.getElementById('f-'+(tipo==='positivos'?'pos':'neg')+'-data')?.value||'';
+  const filtered=entries.map((e,i)=>({...e,_idx:i})).filter(e=>(!fN||(e.nome||'').toLowerCase().includes(fN))&&(!fD||(e.data||'')===fD));
+  lista.innerHTML='';
+  if(filtered.length===0&&entries.length>0){noRes.style.display='block';}
+  else{noRes.style.display='none';filtered.forEach(e=>lista.appendChild(buildEntry(tipo,e._idx,e)));}
+  if(entries.length===0)noRes.style.display='none';
+}
+async function addEntry(tipo){
+  const entries=[...(_c[tipo]||[])];
+  entries.push({nome:'',descricao:'',data:new Date().toISOString().split('T')[0]});
+  _c[tipo]=entries;await fbSave(tipo,entries);renderEntries(tipo);atualizarContadores();
+  const lista=document.getElementById('lista-'+tipo);
+  setTimeout(()=>{lista.scrollTop=lista.scrollHeight;},50);
+  setTimeout(()=>{const c=lista.querySelectorAll('.behavior-field');if(c.length)c[c.length-1].focus();},60);
+}
+async function removeEntry(tipo,idx){
+  const entries=[...(_c[tipo]||[])];entries.splice(idx,1);
+  _c[tipo]=entries;await fbSave(tipo,entries);renderEntries(tipo);atualizarContadores();
+}
+async function saveEntries(tipo){
+  const lista=document.getElementById('lista-'+tipo);const entries=[...(_c[tipo]||[])];
+  lista.querySelectorAll('.behavior-entry').forEach(div=>{
+    const i=parseInt(div.dataset.idx);
+    if(entries[i]){entries[i].nome=div.querySelector('[data-field="nome"]')?.value||'';entries[i].descricao=div.querySelector('[data-field="descricao"]')?.value||'';entries[i].data=div.querySelector('[data-field="data"]')?.value||'';}
+  });
+  _c[tipo]=entries;await fbSave(tipo,entries);atualizarContadores();
+}
+function listenFirebase(){
+  ['positivos','negativos','obs-positivo','obs-negativo'].forEach(key=>{
+    onSnapshot(doc(db,'dashboard',key),snap=>{
+      if(!snap.exists())return;const val=snap.data().value;_c[key]=val;
+      if(key==='positivos'||key==='negativos'){renderEntries(key);atualizarContadores();}
+      else{const el=document.getElementById(key);if(el&&document.activeElement!==el)el.value=val||'';}
+    });
+  });
+  onSnapshot(collection(db,'dashboard'),snap=>{
+    snap.docChanges().forEach(ch=>{
+      const k=ch.doc.id;if(!k.startsWith('pa-'))return;
+      const v=ch.doc.data().value||'';_c[k]=v;
+      const el=document.querySelector(`.plano-input[data-key="${k}"]`);
+      if(el&&document.activeElement!==el){el.value=v;resize(el);}
+    });atualizarContador();
+  });
+}
+async function init(){
+  renderMarcas();
+  for(const id of ['obs-positivo','obs-negativo']){
+    const el=document.getElementById(id);el.value=await fbLoad(id,'');
+    let tm;el.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>fbSave(id,el.value),600);});
+  }
+  _c['positivos']=await fbLoad('positivos',[]);if(!Array.isArray(_c['positivos']))_c['positivos']=[];
+  _c['negativos']=await fbLoad('negativos',[]);if(!Array.isArray(_c['negativos']))_c['negativos']=[];
+  renderEntries('positivos');renderEntries('negativos');atualizarContadores();
+  listenFirebase();
+}
+window.addEntry=addEntry;window.removeEntry=removeEntry;window.renderEntries=renderEntries;
+init();
+function ajustarAltura(){
+  const cl=document.querySelector('.col-left'),w=document.getElementById('tbl-marcas-wrap'),h=document.querySelector('#card-marcas .card-header');
+  if(!cl||!w||!h)return;w.style.height=Math.max(120,cl.getBoundingClientRect().height-h.getBoundingClientRect().height)+'px';
+}
+window.addEventListener('load',()=>setTimeout(ajustarAltura,150));
+window.addEventListener('resize',ajustarAltura);
+setTimeout(ajustarAltura,300);
+</script>
+</body>
+</html>
