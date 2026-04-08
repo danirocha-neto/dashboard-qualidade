@@ -8,15 +8,10 @@ import re
 # ─────────────────────────────────────────────
 #  CONFIGURAÇÃO — altere apenas aqui se mudar a planilha
 # ─────────────────────────────────────────────
-
-# ID público da planilha (retirado do link "Publicar na web")
-SHEET_ID = '2PACX-1vQFihVCoJyeNl66YtugzUD2_e7z5SysjO5TEkiWtkmBKb0VF1WNUen65LvPMJeHkfnd0OXMw3ZP0YLX'
-
-# GIDs das abas (número após gid= na URL pública de cada aba)
+SHEET_ID       = '2PACX-1vQFihVCoJyeNl66YtugzUD2_e7z5SysjO5TEkiWtkmBKb0VF1WNUen65LvPMJeHkfnd0OXMw3ZP0YLX'
 GID_AUDITORIAS = 351234331
 GID_DADOS      = 0
 
-# Firebase — mantenha igual ao index.html
 FIREBASE_CONFIG = """{
   apiKey: "AIzaSyBZQPAI_iae5FxROXfBH3TK3yqwJuRlRws",
   authDomain: "dashboard-qualidade-f96d2.firebaseapp.com",
@@ -36,117 +31,73 @@ def fetch_csv(gid):
     with urllib.request.urlopen(req) as r:
         return pd.read_csv(StringIO(r.read().decode('utf-8')))
 
-def ultimo_dia_util(ref):
-    """Retorna o último dia útil anterior a ref (pula fins de semana)."""
-    d = ref - timedelta(days=1)
-    while d.weekday() >= 5:   # 5=sábado, 6=domingo
-        d -= timedelta(days=1)
-    return d
-
 def d_util_atras(ref, n):
-    """Retorna a data n dias úteis antes de ref."""
-    d = ref
-    contados = 0
-    while contados < n:
+    d, c = ref, 0
+    while c < n:
         d -= timedelta(days=1)
         if d.weekday() < 5:
-            contados += 1
+            c += 1
     return d
 
 def normalizar_marca(m):
     if pd.isna(m): return None
     m = str(m).strip()
     mapa = {
-        'fast tennis':'Fast Tennis', 'airlocker ':'Airlocker', 'airlocker':'Airlocker',
-        'ecoville ':'Ecoville',  'ecoville':'Ecoville',
-        'shelf':'Shelf',         'shelf ':'Shelf',
-        'locar-x':'Locar X',     'locar x ':'Locar X',
-        'la bolaria':'La Bolaria', 'brumed ':'Brumed',
-        'sua hora unha':'Sua Hora Unha', 'mentoria ':'Mentoria',
-        'saúde livre ':'Saúde Livre',   'saúde livre vacinas':'Saúde Livre',
-        'lypedepil':'Lypedepil',        'lypedepyl':'Lypedepil',
-        '4beach':'4 Beach',
+        'fast tennis':'Fast Tennis','airlocker ':'Airlocker','airlocker':'Airlocker',
+        'ecoville ':'Ecoville','ecoville':'Ecoville','shelf':'Shelf','shelf ':'Shelf',
+        'locar-x':'Locar X','locar x ':'Locar X','la bolaria':'La Bolaria',
+        'brumed ':'Brumed','sua hora unha':'Sua Hora Unha','mentoria ':'Mentoria',
+        'saúde livre ':'Saúde Livre','saúde livre vacinas':'Saúde Livre',
+        'lypedepil':'Lypedepil','lypedepyl':'Lypedepil','4beach':'4 Beach',
     }
     return mapa.get(m.lower(), m)
 
-def fmt_br(n):
-    if n is None or (isinstance(n, float) and np.isnan(n)): return '—'
-    if isinstance(n, float): return f'{n:.1f}'.replace('.', ',')
-    return str(int(n))
-
-def bar_html(media, meta):
-    pct = min(media / meta * 100, 100)
-    col = 'var(--amber)' if pct >= 70 else 'var(--red)'
-    return (f'<div class="bar-wrap"><div class="bar-bg">'
-            f'<div class="bar-fill" style="width:{pct:.1f}%;background:{col}"></div></div>'
-            f'<span class="bar-pct" style="color:{col}">{pct:.1f}%'.replace('.', ',') + '</span></div>')
-
 def safe_key(s):
     return re.sub(r'[^a-zA-Z0-9]', '', str(s))
+
+def achar_coluna(colunas, possiveis):
+    for p in possiveis:
+        if p in colunas: return p
+    for p in possiveis:
+        found = next((c for c in colunas if p.lower() in c.lower()), None)
+        if found: return found
+    return None
 
 # ─────────────────────────────────────────────
 #  LÓGICA PRINCIPAL
 # ─────────────────────────────────────────────
 def gerar():
+
     # ── 1. Carregar Auditorias ──────────────────
     df = fetch_csv(GID_AUDITORIAS)
     df.columns = [c.strip() for c in df.columns]
+    print('Colunas Auditorias:', df.columns.tolist())
 
-    print('Colunas encontradas:', df.columns.tolist())
-
-    # Validar que é a aba certa (deve ter coluna de Tipo de Auditoria)
     if not any('tipo' in c.lower() for c in df.columns):
-        raise ValueError(
-            f'ERRO: Aba carregada não parece ser "Auditorias". '
-            f'Colunas encontradas: {df.columns.tolist()}. '
-            f'Tente trocar GID_AUDITORIAS e GID_DADOS no topo do script.'
-        )
+        raise ValueError(f'Aba errada carregada. Colunas: {df.columns.tolist()}. Verifique GID_AUDITORIAS.')
 
-    # Detectar coluna de data — tenta nomes comuns, senão pega a primeira com 'dat'
-    POSSIVEIS_DATA  = ['Data da Auditoria', 'Data', 'data', 'DATA']
-    POSSIVEIS_QUAL  = ['Checklist da Qualificação', 'Checklist da Qualidade',
-                       'Checklist da Qualificacao', 'checklist da qualificação']
-    POSSIVEIS_TIPO  = ['Tipo de Auditoria', 'Tipo', 'tipo']
-    POSSIVEIS_MARCA = ['Marca', 'marca', 'MARCA']
+    col_data  = achar_coluna(df.columns, ['Data da Auditoria','Data','data'])
+    # col E = Checklist de Processo (tipos especiais)
+    col_E     = achar_coluna(df.columns, ['Checklist de Processo'])
+    # col F = Checklist da Qualificação (Ligação)
+    col_F     = achar_coluna(df.columns, ['Checklist da Qualificação','Checklist da Qualidade','Checklist da Qualificacao'])
+    col_tipo  = achar_coluna(df.columns, ['Tipo de Auditoria','Tipo'])
+    col_marca = achar_coluna(df.columns, ['Marca','marca'])
 
-    def achar(colunas, possiveis):
-        for p in possiveis:
-            if p in colunas: return p
-        # fallback: busca parcial
-        for p in possiveis:
-            found = next((c for c in colunas if p.lower() in c.lower()), None)
-            if found: return found
-        return None
+    print(f'col_data={col_data} | col_E={col_E} | col_F={col_F} | col_tipo={col_tipo} | col_marca={col_marca}')
 
-    cols = df.columns.tolist()
-    col_data  = achar(cols, POSSIVEIS_DATA)
-    col_qual  = achar(cols, POSSIVEIS_QUAL)
-    col_tipo  = achar(cols, POSSIVEIS_TIPO)
-    col_marca = achar(cols, POSSIVEIS_MARCA)
+    for col, nome in [(col_data,'Data'),(col_E,'Checklist de Processo'),(col_F,'Checklist da Qualificação'),(col_tipo,'Tipo'),(col_marca,'Marca')]:
+        if not col:
+            raise ValueError(f'Coluna "{nome}" não encontrada. Colunas disponíveis: {df.columns.tolist()}')
 
-    print(f'col_data={col_data} | col_qual={col_qual} | col_tipo={col_tipo} | col_marca={col_marca}')
-
-    if not col_data:
-        raise ValueError(f'Coluna de data não encontrada. Colunas disponíveis: {cols}')
-    if not col_qual:
-        raise ValueError(f'Coluna de qualificação não encontrada. Colunas disponíveis: {cols}')
-    if not col_tipo:
-        raise ValueError(f'Coluna de tipo não encontrada. Colunas disponíveis: {cols}')
-    if not col_marca:
-        raise ValueError(f'Coluna de marca não encontrada. Colunas disponíveis: {cols}')
-
-    df[col_data] = pd.to_datetime(df[col_data], dayfirst=True, errors='coerce')
+    df[col_data]  = pd.to_datetime(df[col_data], dayfirst=True, errors='coerce')
     df = df.dropna(subset=[col_data, col_tipo])
-
     df[col_tipo]  = df[col_tipo].str.strip().replace({'Treinamentos':'Treinamento'})
     df[col_marca] = df[col_marca].apply(normalizar_marca)
 
     # ── 2. Datas de referência (ignora fins de semana) ──
-    hoje       = df[col_data].dt.date.max()          # último dia com dados
-    d1_data    = ultimo_dia_util(hoje)                # D-1 = último dia útil
-    # Se hoje for dia útil e tiver dados, D-1 = hoje
-    if hoje.weekday() < 5:
-        d1_data = hoje
+    hoje       = df[col_data].dt.date.max()
+    d1_data    = hoje if hoje.weekday() < 5 else d_util_atras(hoje, 1)
     d7_inicio  = d_util_atras(hoje, 7)
     d30_inicio = d_util_atras(hoje, 30)
 
@@ -160,91 +111,117 @@ def gerar():
     r30 = df[df[col_data].dt.date >= d30_inicio]
     total = len(df)
 
-    # ── 3. Tipos (excluir Treinamento / Gestão / sem tipo) ──
+    print(f'Total={total} | D1={len(r1)} ({d1_str}) | D7={len(r7)} | D30={len(r30)}')
+
+    # ── 3. Tipos ────────────────────────────────
     excluir = {'Treinamento','Treinamentos','Gestão á Vista','Gestão à Vista'}
     tipos = sorted([t for t in df[col_tipo].dropna().unique()
                     if t not in excluir and str(t).strip()])
+    tipos_esp = {'Spread.Chat','Volumetria','Lead Time','Cadência'}
 
     # ── 4. Quantidade por tipo ──────────────────
-    def qtd_tipo(r, t): return len(r[r[col_tipo]==t])
-
     linhas_tipo = ''
     tot1=tot7=tot30=0
     for t in tipos:
-        c1,c7,c30 = qtd_tipo(r1,t), qtd_tipo(r7,t), qtd_tipo(r30,t)
+        c1  = len(r1[r1[col_tipo]==t])
+        c7  = len(r7[r7[col_tipo]==t])
+        c30 = len(r30[r30[col_tipo]==t])
         tot1+=c1; tot7+=c7; tot30+=c30
         s1  = f'<span class="tr">{c1}</span>' if c1 else '<span class="tz">—</span>'
         s7  = f'<span class="tr">{c7}</span>' if c7 else '<span class="tz">—</span>'
         linhas_tipo += f'<tr><td class="tl">{t}</td><td>{s1}</td><td class="sep">{s7}</td><td class="sep tr">{c30}</td></tr>\n'
     linhas_tipo += f'<tr class="tr-total"><td>Total</td><td class="tr">{tot1 or "—"}</td><td class="tr sep">{tot7}</td><td class="tr sep">{tot30}</td></tr>'
 
-    # ── 5. Conformidade por tipo e período ──────
-    #  Ligação: % conforme / % não conforme normal
-    #  Especiais (Spread.Chat, Volumetria, Lead Time, Cadência): 100 - qtd_NC
-    tipos_especiais = {'Spread.Chat','Volumetria','Lead Time','Cadência'}
+    # ── 5. Conformidade por tipo ─────────────────
+    # Ligação  → col F (Checklist da Qualificação): % conf, % nao, % cor
+    # Especiais → col E (Checklist de Processo): pontos = 100-qtd_NC, % NC, % Cor
+    def calc_conf_tipo(r, t):
+        if t == 'Ligação':
+            gv = r[(r[col_tipo]==t) & r[col_F].notna()]
+            tot = len(gv)
+            if tot == 0: return None
+            conf = round(len(gv[gv[col_F]=='Conforme'])/tot*100, 1)
+            nao  = round(len(gv[gv[col_F]=='Não Conforme'])/tot*100, 1)
+            cor  = round(len(gv[gv[col_F]=='Corrigido'])/tot*100, 1)
+            return {'tot':tot, 'conf':conf, 'nao':nao, 'cor':cor, 'modo':'lig'}
+        else:
+            gv = r[(r[col_tipo]==t) & r[col_E].notna()]
+            tot = len(gv)
+            if tot == 0: return None
+            nc  = len(gv[gv[col_E]=='Não Conforme'])
+            cor = len(gv[gv[col_E]=='Corrigido'])
+            pts = max(0, 100 - nc)
+            nao_pct = round(nc/tot*100, 1) if tot > 0 else 0
+            cor_pct = round(cor/tot*100, 1) if tot > 0 else 0
+            return {'tot':tot, 'conf':pts, 'nao':nao_pct, 'cor':cor_pct, 'modo':'esp'}
 
-    def conf_rows(r):
-        rows = ''
+    def conf_tipo_js(r):
+        rows = []
         for t in tipos:
-            g = r[r[col_tipo]==t]
-            total_t = len(g)
-            if total_t == 0:
-                rows += f'<tr><td class="tl">{t}</td><td class="tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td></tr>\n'
-                continue
-            if t in tipos_especiais:
-                nc   = len(g[g[col_qual]=='Não Conforme'])
-                conf = max(0, 100 - nc)
-                nao  = nc
-                cs = f'<span class="c-g">{conf}%</span>'
-                ns = f'<span class="c-r">{nao}</span>' if nao > 0 else '<span class="tz">—</span>'
+            res = calc_conf_tipo(r, t)
+            if res:
+                rows.append(f'{{tipo:"{t}",tot:{res["tot"]},conf:{res["conf"]},nao:{res["nao"]},cor:{res["cor"]},modo:"{res["modo"]}"}}'  )
             else:
-                conf = round(len(g[g[col_qual]=='Conforme'])/total_t*100, 1)
-                nao  = round(len(g[g[col_qual]=='Não Conforme'])/total_t*100, 1)
-                cs = f'<span class="c-g">{str(conf).replace(".",",")}%</span>'
-                ns = f'<span class="c-r">{str(nao).replace(".",",")}%</span>' if nao > 0 else '<span class="tz">—</span>'
-            rows += f'<tr><td class="tl">{t}</td><td class="tr">{total_t}</td><td class="sep">{cs}</td><td class="sep">{ns}</td></tr>\n'
-        return rows
+                rows.append(f'{{tipo:"{t}",tot:0,conf:null,nao:null,cor:null,modo:""}}')
+        return '[' + ',\n    '.join(rows) + ']'
 
-    conf_d1  = conf_rows(r1)
-    conf_d7  = conf_rows(r7)
-    conf_d30 = conf_rows(r30)
+    conf_tipo_d1  = conf_tipo_js(r1)
+    conf_tipo_d7  = conf_tipo_js(r7)
+    conf_tipo_d30 = conf_tipo_js(r30)
 
-    # ── 6. Marcas ───────────────────────────────
+    # ── 6. Conformidade por marca ────────────────
     marcas_ord = (r30.groupby(col_marca).size()
-                     .sort_values(ascending=False)
-                     .index.tolist())
+                     .sort_values(ascending=False).index.tolist())
     marcas_ord = [m for m in marcas_ord if m and not pd.isna(m)]
 
-    # Conformidade por marca: Ligação (% NC) | Especiais (100-NC) | Geral (% NC)
-    def conf_marca_obj(marca, tipo_filtro, r):
-        if tipo_filtro == 'geral':
-            g = r[r[col_marca]==marca]
+    def calc_marca(m, filtro, r):
+        tipo_map = {
+            'Ligacao':'Ligação','SpreadChat':'Spread.Chat',
+            'Volumetria':'Volumetria','LeadTime':'Lead Time',
+            'Cadencia':'Cadência'
+        }
+        if filtro == 'Ligacao':
+            g  = r[(r[col_marca]==m) & (r[col_tipo]=='Ligação')]
+            gv = g[g[col_F].notna()]
+            tot = len(gv)
+            if tot == 0: return 'null'
+            conf = round(len(gv[gv[col_F]=='Conforme'])/tot*100, 1)
+            nao  = round(len(gv[gv[col_F]=='Não Conforme'])/tot*100, 1)
+            cor  = round(len(gv[gv[col_F]=='Corrigido'])/tot*100, 1)
+            return f'{{conf:{conf},nao:{nao},cor:{cor},modo:"lig"}}'
+        elif filtro == 'geral':
+            lig = r[(r[col_marca]==m) & (r[col_tipo]=='Ligação')]
+            out = r[(r[col_marca]==m) & (r[col_tipo].isin(tipos_esp))]
+            gl  = lig[lig[col_F].notna()]
+            go  = out[out[col_E].notna()]
+            tot = len(gl) + len(go)
+            if tot == 0: return 'null'
+            ct  = len(gl[gl[col_F]=='Conforme'])  + len(go[go[col_E]=='Conforme'])
+            nt  = len(gl[gl[col_F]=='Não Conforme']) + len(go[go[col_E]=='Não Conforme'])
+            cot = len(gl[gl[col_F]=='Corrigido'])  + len(go[go[col_E]=='Corrigido'])
+            return f'{{conf:{round(ct/tot*100,1)},nao:{round(nt/tot*100,1)},cor:{round(cot/tot*100,1)},modo:"geral"}}'
         else:
-            g = r[(r[col_marca]==marca) & (r[col_tipo]==tipo_filtro)]
-        if len(g) == 0: return 'null'
-        if tipo_filtro in tipos_especiais:
-            nc   = len(g[g[col_qual]=='Não Conforme'])
-            conf = max(0, 100 - nc)
-            nao  = nc
-        else:
-            conf = round(len(g[g[col_qual]=='Conforme'])/len(g)*100, 1)
-            nao  = round(len(g[g[col_qual]=='Não Conforme'])/len(g)*100, 1)
-        return f'{{conf:{conf},nao:{nao}}}'
+            t  = tipo_map.get(filtro, filtro)
+            g  = r[(r[col_marca]==m) & (r[col_tipo]==t)]
+            gv = g[g[col_E].notna()]
+            tot = len(gv)
+            if tot == 0: return 'null'
+            nc  = len(gv[gv[col_E]=='Não Conforme'])
+            cor = len(gv[gv[col_E]=='Corrigido'])
+            nao_pct = round(nc/tot*100, 1)
+            cor_pct = round(cor/tot*100, 1)
+            return f'{{conf:{max(0,100-nc)},nao:{nao_pct},cor:{cor_pct},modo:"esp"}}'
 
-    def js_mapa(tipo_filtro):
-        linhas = ', '.join(
-            f'"{m}":{conf_marca_obj(m, tipo_filtro, r30)}'
-            for m in marcas_ord
-        )
-        return '{' + linhas + '}'
+    def js_mapa(filtro):
+        return '{' + ','.join(f'"{m}":{calc_marca(m,filtro,r30)}' for m in marcas_ord) + '}'
 
     conf_js = (
-        f'const confLigacao   = {js_mapa("Ligação")};\n'
-        f'const confSpreadChat= {js_mapa("Spread.Chat")};\n'
-        f'const confVolumetria= {js_mapa("Volumetria")};\n'
-        f'const confLeadTime  = {js_mapa("Lead Time")};\n'
-        f'const confCadencia  = {js_mapa("Cadência")};\n'
-        f'const confGeral     = {js_mapa("geral")};\n'
+        f'const confLigacao    = {js_mapa("Ligacao")};\n'
+        f'const confSpreadChat = {js_mapa("SpreadChat")};\n'
+        f'const confVolumetria = {js_mapa("Volumetria")};\n'
+        f'const confLeadTime   = {js_mapa("LeadTime")};\n'
+        f'const confCadencia   = {js_mapa("Cadencia")};\n'
+        f'const confgeral      = {js_mapa("geral")};\n'
     )
 
     marcas_js = 'const marcasData = [\n'
@@ -260,38 +237,28 @@ def gerar():
     df2.columns = [c.strip() for c in df2.columns]
     print('Colunas Dados:', df2.columns.tolist())
 
-    # Detectar coluna de dia/data
-    col_dia = next((c for c in df2.columns if c.lower() in ['dia','data','date']), None)
-    if not col_dia:
-        col_dia = next((c for c in df2.columns if 'dia' in c.lower() or 'data' in c.lower()), None)
-    if not col_dia:
-        raise ValueError(f'Coluna de data não encontrada na aba Dados. Colunas: {df2.columns.tolist()}')
-
-    # Detectar coluna de média
-    col_media = next((c for c in df2.columns if 'dia' not in c.lower() and ('dia' in c.lower() or 'méd' in c.lower() or 'med' in c.lower() or c.strip()=='Média')), None)
-    if not col_media:
-        col_media = next((c for c in df2.columns if 'méd' in c.lower() or 'med' in c.lower()), 'Média')
-
-    # Detectar coluna de diretoria
-    col_dir = next((c for c in df2.columns if 'diret' in c.lower()), 'Diretoria')
+    col_dia   = achar_coluna(df2.columns, ['Dia','Data','data','dia'])
+    col_media = achar_coluna(df2.columns, ['Média','Media','média','media'])
+    col_dir   = achar_coluna(df2.columns, ['Diretoria','diretoria'])
+    col_meta  = achar_coluna(df2.columns, ['Meta','meta'])
 
     print(f'col_dia={col_dia} | col_media={col_media} | col_dir={col_dir}')
 
-    df2[col_dia] = pd.to_datetime(df2[col_dia], dayfirst=True, errors='coerce')
-    df2 = df2.dropna(subset=[col_media, col_dia])
+    df2[col_dia]   = pd.to_datetime(df2[col_dia], dayfirst=True, errors='coerce')
     df2[col_media] = pd.to_numeric(df2[col_media], errors='coerce')
+    df2 = df2.dropna(subset=[col_media, col_dia])
 
     dr7  = df2[df2[col_dia].dt.date >= d7_inicio]
     dr30 = df2[df2[col_dia].dt.date >= d30_inicio]
     dirs = sorted(df2[col_dir].dropna().unique())
-    meta = int(df2['Meta'].iloc[0]) if 'Meta' in df2.columns else 200
+    meta = int(df2[col_meta].iloc[0]) if col_meta else 200
 
     dir_js = 'const dirData = {\n'
     for d in dirs:
         m7  = dr7[dr7[col_dir]==d][col_media].mean()
         m30 = dr30[dr30[col_dir]==d][col_media].mean()
-        v7  = f'{m7:.1f}' if not pd.isna(m7) else 'null'
-        v30 = f'{m30:.1f}' if not pd.isna(m30) else 'null'
+        v7  = round(float(m7), 1) if not pd.isna(m7) else 'null'
+        v30 = round(float(m30), 1) if not pd.isna(m30) else 'null'
         dir_js += f'  "{d}":{{d7:{v7},d30:{v30}}},\n'
     dir_js += '};'
 
@@ -357,6 +324,7 @@ tr:hover td{{background:var(--surface2);}}
 .tl{{font-weight:500;}}.tr{{text-align:right;font-variant-numeric:tabular-nums;}}
 .tz{{color:var(--muted);text-align:right;}}.sep{{border-left:.5px solid var(--border);}}
 .c-g{{color:var(--green);font-weight:600;}}.c-r{{color:var(--red);font-weight:600;}}
+.c-a{{color:var(--amber);font-weight:600;}}
 .tr-total td{{font-weight:600;background:var(--surface2);border-top:1px solid var(--border);}}
 .tbl-marcas-wrap{{overflow-x:auto;overflow-y:auto;}}
 .tbl-marcas-wrap thead th{{position:sticky;top:0;z-index:2;background:var(--surface2);}}
@@ -379,31 +347,24 @@ tr:hover td{{background:var(--surface2);}}
 .qual-bloco-title{{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px;padding-bottom:4px;border-bottom:.5px solid var(--border);}}
 .qual-pos-title{{color:var(--green);}}.qual-neg-title{{color:var(--red);}}
 .qual-filters{{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}}
-.qual-filter-input{{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;transition:border-color .15s;}}
-.qual-filter-input:focus{{border-color:var(--blue);}}
+.qual-filter-input{{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;}}
 .qual-filter-input::placeholder{{color:var(--muted);}}
 .qual-filter-date{{width:115px;}}.qual-filter-name{{flex:1;min-width:90px;}}
 .qual-filter-label{{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);white-space:nowrap;}}
 .behavior-list{{overflow-y:auto;max-height:130px;display:flex;flex-direction:column;gap:4px;padding-right:2px;}}
 .behavior-entry{{background:var(--surface);border:.5px solid var(--border);border-radius:6px;padding:5px 7px;display:flex;flex-direction:column;gap:4px;flex-shrink:0;}}
 .behavior-meta{{display:grid;grid-template-columns:1fr 110px auto;gap:4px;align-items:center;}}
-.behavior-field{{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;transition:border-color .15s;width:100%;}}
-.behavior-field:focus{{border-color:var(--blue);}}
+.behavior-field{{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;width:100%;}}
 .behavior-field::placeholder{{color:var(--muted);}}
-.behavior-date{{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;width:100%;transition:border-color .15s;}}
-.behavior-date:focus{{border-color:var(--blue);}}
+.behavior-date{{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;width:100%;}}
 .remove-btn{{padding:1px 6px;font-size:10px;border:.5px solid var(--border);border-radius:4px;background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap;height:22px;}}
 .remove-btn:hover{{border-color:var(--red);color:var(--red);}}
-.behavior-desc{{width:100%;padding:3px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;resize:none;outline:none;min-height:28px;line-height:1.3;transition:border-color .15s;}}
-.behavior-desc:focus{{border-color:var(--blue);}}
+.behavior-desc{{width:100%;padding:3px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;resize:none;outline:none;min-height:28px;line-height:1.3;}}
 .behavior-desc::placeholder{{color:var(--muted);}}
-.add-btn{{align-self:flex-start;padding:2px 8px;font-size:10px;font-weight:600;color:var(--blue);background:transparent;border:.5px solid var(--blue);border-radius:4px;cursor:pointer;transition:background .15s;font-family:inherit;}}
-.add-btn:hover{{background:rgba(21,88,160,.07);}}
+.add-btn{{align-self:flex-start;padding:2px 8px;font-size:10px;font-weight:600;color:var(--blue);background:transparent;border:.5px solid var(--blue);border-radius:4px;cursor:pointer;font-family:inherit;}}
 .add-btn.neg{{color:var(--red);border-color:var(--red);}}
-.add-btn.neg:hover{{background:rgba(146,40,40,.07);}}
 .obs-label{{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:2px;}}
-.obs-box{{width:100%;padding:4px 7px;border:.5px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;resize:vertical;outline:none;min-height:28px;line-height:1.4;transition:border-color .15s;}}
-.obs-box:focus{{border-color:var(--blue);}}
+.obs-box{{width:100%;padding:4px 7px;border:.5px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;resize:vertical;outline:none;min-height:28px;line-height:1.4;}}
 .obs-box::placeholder{{color:var(--muted);}}
 .no-results{{font-size:10px;color:var(--muted);padding:6px 4px;text-align:center;}}
 footer{{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}}
@@ -433,7 +394,6 @@ footer{{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}}
 
 <div class="main-grid">
 <div class="col-left">
-
   <div class="card">
     <div class="card-header"><div class="dot d-blue"></div><div class="card-title">Quantidade por Tipo de Auditoria</div></div>
     <div class="tbl-wrap"><table>
@@ -452,9 +412,12 @@ footer{{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}}
       </div>
     </div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Tipo</th><th class="r">Total</th>
+      <thead><tr>
+        <th>Tipo</th><th class="r">Total</th>
         <th class="r sep" style="color:var(--green)">Conforme</th>
-        <th class="r sep" style="color:var(--red)">Não Conforme</th></tr></thead>
+        <th class="r sep" style="color:var(--red)">Não Conf.</th>
+        <th class="r sep" style="color:var(--amber)">Corrigido</th>
+      </tr></thead>
       <tbody id="tbody-conf"></tbody>
     </table></div>
   </div>
@@ -480,7 +443,6 @@ footer{{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}}
       <tbody id="tbody-dir"></tbody>
     </table></div>
   </div>
-
 </div>
 
 <div class="col-right">
@@ -568,44 +530,54 @@ async function fbLoad(k,def=''){{
 }}
 
 /* ── DADOS ── */
-const confDataPeriodos = {{
-  d1:`{conf_d1}`,
-  d7:`{conf_d7}`,
-  d30:`{conf_d30}`
+const confTipoPeriodos = {{
+  d1: {conf_tipo_d1},
+  d7: {conf_tipo_d7},
+  d30: {conf_tipo_d30}
 }};
+
 {conf_js}
 {marcas_js}
 {dir_js}
 
-const mapaConf={{Ligacao:confLigacao,SpreadChat:confSpreadChat,Volumetria:confVolumetria,LeadTime:confLeadTime,Cadencia:confCadencia,geral:confGeral}};
-const labelTipo={{Ligacao:'Ligação',SpreadChat:'Spread.Chat',Volumetria:'Volumetria',LeadTime:'Lead Time',Cadencia:'Cadência',geral:'Geral'}};
+const mapaConf = {{Ligacao:confLigacao,SpreadChat:confSpreadChat,Volumetria:confVolumetria,LeadTime:confLeadTime,Cadencia:confCadencia,geral:confgeral}};
+const labelTipo = {{Ligacao:'Ligação',SpreadChat:'Spread.Chat',Volumetria:'Volumetria',LeadTime:'Lead Time',Cadencia:'Cadência',geral:'Geral'}};
 let tipoAtual='Ligacao', metaAtual={meta};
 
 /* ── CONFORMIDADE POR TIPO ── */
-function fmtN(n,t){{
-  if(n===null||n===undefined)return'<span class="tz">—</span>';
-  const v=String(n).replace('.',',')+'%';
-  return t==='conf'?`<span class="c-g">${{v}}</span>`:(parseFloat(n)>0?`<span class="c-r">${{v}}</span>`:'<span class="tz">—</span>');
-}}
 function renderConf(p){{
   ['d1','d7','d30'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===p));
-  document.getElementById('tbody-conf').innerHTML=confDataPeriodos[p]||'';
+  document.getElementById('tbody-conf').innerHTML = confTipoPeriodos[p].map(r=>{{
+    if(r.tot===0) return `<tr><td class="tl">${{r.tipo}}</td><td class="tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td></tr>`;
+    if(r.modo==='lig'){{
+      const cs=`<span class="c-g">${{String(r.conf).replace('.',',')}}%</span>`;
+      const ns=r.nao>0?`<span class="c-r">${{String(r.nao).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
+      const cors=r.cor>0?`<span class="c-a">${{String(r.cor).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
+      return `<tr><td class="tl">${{r.tipo}}</td><td class="tr">${{r.tot}}</td><td class="sep">${{cs}}</td><td class="sep">${{ns}}</td><td class="sep">${{cors}}</td></tr>`;
+    }} else {{
+      const cs=`<span class="${{r.conf>=90?'c-g':r.conf>=70?'c-a':'c-r'}}">${{r.conf}}%</span>`;
+      const ns=r.nao>0?`<span class="c-r">${{String(r.nao).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
+      const cors=r.cor>0?`<span class="c-a">${{String(r.cor).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
+      return `<tr><td class="tl">${{r.tipo}}</td><td class="tr">${{r.tot}}</td><td class="sep">${{cs}}</td><td class="sep">${{ns}}</td><td class="sep">${{cors}}</td></tr>`;
+    }}
+  }}).join('');
 }}
-window.setConf=p=>renderConf(p);
+window.setConf = p => renderConf(p);
 renderConf('d30');
 
 /* ── DIRETORIAS ── */
+function barDir(val,sep=false){{
+  if(!val||val==='null')return`<td class="${{sep?'sep ':''}}tz">—</td><td>—</td>`;
+  const pct=Math.min(parseFloat(val)/metaAtual*100,100);
+  const col=pct>=100?'var(--green)':pct>=85?'var(--amber)':'var(--red)';
+  return`<td class="tr${{sep?' sep':''}}">${{String(val).replace('.',',')}}</td>
+    <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${{Math.min(pct,100).toFixed(1)}}%;background:${{col}}"></div></div>
+    <span class="bar-pct" style="color:${{col}}">${{pct.toFixed(1).replace('.',',')}}%</span></div></td>`;
+}}
 function renderDir(){{
-  document.getElementById('tbody-dir').innerHTML=Object.entries(dirData).map(([d,v])=>{{
-    function bc(val,sep=false){{
-      if(!val||val==='null')return`<td class="${{sep?'sep ':''}}tz">—</td><td>—</td>`;
-      const pct=Math.min(parseFloat(val)/metaAtual*100,100),col=pct>=70?'var(--amber)':'var(--red)';
-      return`<td class="tr${{sep?' sep':''}}">${{String(val).replace('.',',')}}</td>
-        <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${{pct.toFixed(1)}}%;background:${{col}}"></div></div>
-        <span class="bar-pct" style="color:${{col}}">${{pct.toFixed(1).replace('.',',')}}%</span></div></td>`;
-    }}
-    return`<tr><td class="tl">${{d}}</td>${{bc(v.d7)}}${{bc(v.d30,true)}}</tr>`;
-  }}).join('');
+  document.getElementById('tbody-dir').innerHTML=Object.entries(dirData).map(([d,v])=>
+    `<tr><td class="tl">${{d}}</td>${{barDir(v.d7)}}${{barDir(v.d30,true)}}</tr>`
+  ).join('');
 }}
 window.setMeta=v=>{{metaAtual=parseInt(v);renderDir();}};
 renderDir();
@@ -614,16 +586,14 @@ renderDir();
 function confCell(nome,tipo){{
   const d=mapaConf[tipo]?.[nome];
   if(d===null||d===undefined)return'<div class="conf-cell"><span class="conf-na">Sem dados</span></div>';
-  if(d.conf<90){{
-    const lbl=`${{d.conf}}% Conf.`;
-    return`<div class="conf-cell"><span class="bola bola-red"></span><span class="conf-pct conf-red">${{lbl}}</span></div>`;
-  }}
-  return`<div class="conf-cell"><span class="bola bola-ok"></span><span class="conf-pct conf-ok">${{d.conf}}% Conf.</span></div>`;
+  const ok=d.conf>=90;
+  const lbl=`${{d.conf}}% Conf.`;
+  return`<div class="conf-cell"><span class="bola ${{ok?'bola-ok':'bola-red'}}"></span><span class="conf-pct ${{ok?'conf-ok':'conf-red'}}">${{lbl}}</span></div>`;
 }}
 function planoCell(nome,tipo){{
-  const d=mapaConf[tipo]?.[nome],m=marcasData.find(x=>x.nome===nome);
+  const d=mapaConf[tipo]?.[nome];
   if(!d||d===null)return`<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
-  if(d.conf<90)return`<td class="sep plano-cell"><textarea class="plano-input" data-key="${{m?.key||nome}}" placeholder="Plano de ação..."></textarea></td>`;
+  if(d.conf<90){{const key=marcasData.find(m=>m.nome===nome)?.key||nome;return`<td class="sep plano-cell"><textarea class="plano-input" data-key="${{key}}" placeholder="Plano de ação..."></textarea></td>`;}}
   return`<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
 }}
 function renderMarcas(){{
