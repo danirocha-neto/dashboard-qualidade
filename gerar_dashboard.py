@@ -145,15 +145,17 @@ def gerar():
             cor  = round(len(gv[gv[col_F]=='Corrigido'])/tot*100, 1)
             return {'tot':tot, 'conf':conf, 'nao':nao, 'cor':cor, 'modo':'lig'}
         else:
+            # col E — % reais (conf+nao+cor = 100%)
             gv = r[(r[col_tipo]==t) & r[col_E].notna()]
             tot = len(gv)
             if tot == 0: return None
-            nc  = len(gv[gv[col_E]=='Não Conforme'])
-            cor = len(gv[gv[col_E]=='Corrigido'])
-            pts = max(0, 100 - nc)
-            nao_pct = round(nc/tot*100, 1) if tot > 0 else 0
-            cor_pct = round(cor/tot*100, 1) if tot > 0 else 0
-            return {'tot':tot, 'conf':pts, 'nao':nao_pct, 'cor':cor_pct, 'modo':'esp'}
+            conf_n = len(gv[gv[col_E]=='Conforme'])
+            nao_n  = len(gv[gv[col_E]=='Não Conforme'])
+            cor_n  = len(gv[gv[col_E]=='Corrigido'])
+            conf_p = round(conf_n/tot*100, 1)
+            nao_p  = round(nao_n/tot*100, 1)
+            cor_p  = round(cor_n/tot*100, 1)
+            return {'tot':tot, 'conf':conf_p, 'nao':nao_p, 'cor':cor_p, 'modo':'esp'}
 
     def conf_tipo_js(r):
         rows = []
@@ -549,17 +551,11 @@ function renderConf(p){{
   ['d1','d7','d30'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===p));
   document.getElementById('tbody-conf').innerHTML = confTipoPeriodos[p].map(r=>{{
     if(r.tot===0) return `<tr><td class="tl">${{r.tipo}}</td><td class="tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td></tr>`;
-    if(r.modo==='lig'){{
-      const cs=`<span class="c-g">${{String(r.conf).replace('.',',')}}%</span>`;
-      const ns=r.nao>0?`<span class="c-r">${{String(r.nao).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
-      const cors=r.cor>0?`<span class="c-a">${{String(r.cor).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
-      return `<tr><td class="tl">${{r.tipo}}</td><td class="tr">${{r.tot}}</td><td class="sep">${{cs}}</td><td class="sep">${{ns}}</td><td class="sep">${{cors}}</td></tr>`;
-    }} else {{
-      const cs=`<span class="${{r.conf>=90?'c-g':r.conf>=70?'c-a':'c-r'}}">${{r.conf}}%</span>`;
-      const ns=r.nao>0?`<span class="c-r">${{String(r.nao).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
-      const cors=r.cor>0?`<span class="c-a">${{String(r.cor).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
-      return `<tr><td class="tl">${{r.tipo}}</td><td class="tr">${{r.tot}}</td><td class="sep">${{cs}}</td><td class="sep">${{ns}}</td><td class="sep">${{cors}}</td></tr>`;
-    }}
+    /* conf+nao+cor = 100% sempre */
+    const cs=`<span class="${{r.conf>=90?'c-g':r.conf>=70?'c-a':'c-r'}}">${{String(r.conf).replace('.',',')}}%</span>`;
+    const ns=r.nao>0?`<span class="c-r">${{String(r.nao).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
+    const cors=r.cor>0?`<span class="c-a">${{String(r.cor).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
+    return `<tr><td class="tl">${{r.tipo}}</td><td class="tr">${{r.tot}}</td><td class="sep">${{cs}}</td><td class="sep">${{ns}}</td><td class="sep">${{cors}}</td></tr>`;
   }}).join('');
 }}
 window.setConf = p => renderConf(p);
