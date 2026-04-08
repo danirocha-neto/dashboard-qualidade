@@ -9,8 +9,12 @@ import re
 #  CONFIGURAÇÃO — altere apenas aqui se mudar a planilha
 # ─────────────────────────────────────────────
 SHEET_ID = '2PACX-1vQFihVCoJyeNl66YtugzUD2_e7z5SysjO5TEkiWtkmBKb0VF1WNUen65LvPMJeHkfnd0OXMw3ZP0YLX'
-GID_AUDITORIAS = 0
-GID_DADOS      = 1
+
+# GIDs das abas — se der erro, troque os valores:
+# 0 = primeira aba, 1 = segunda aba (padrão Google Sheets publicado)
+# Caso as abas estejam invertidas, troque: GID_AUDITORIAS=1, GID_DADOS=0
+GID_AUDITORIAS = 1
+GID_DADOS      = 0
 
 # Firebase — mantenha igual ao index.html
 FIREBASE_CONFIG = """{
@@ -87,6 +91,14 @@ def gerar():
     df.columns = [c.strip() for c in df.columns]
 
     print('Colunas encontradas:', df.columns.tolist())
+
+    # Validar que é a aba certa (deve ter coluna de Tipo de Auditoria)
+    if not any('tipo' in c.lower() for c in df.columns):
+        raise ValueError(
+            f'ERRO: Aba carregada não parece ser "Auditorias". '
+            f'Colunas encontradas: {df.columns.tolist()}. '
+            f'Tente trocar GID_AUDITORIAS e GID_DADOS no topo do script.'
+        )
 
     # Detectar coluna de data — tenta nomes comuns, senão pega a primeira com 'dat'
     POSSIVEIS_DATA  = ['Data da Auditoria', 'Data', 'data', 'DATA']
