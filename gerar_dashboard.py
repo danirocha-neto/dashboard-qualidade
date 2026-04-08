@@ -8,12 +8,12 @@ import re
 # ─────────────────────────────────────────────
 #  CONFIGURAÇÃO — altere apenas aqui se mudar a planilha
 # ─────────────────────────────────────────────
+
+# ID público da planilha (retirado do link "Publicar na web")
 SHEET_ID = '2PACX-1vQFihVCoJyeNl66YtugzUD2_e7z5SysjO5TEkiWtkmBKb0VF1WNUen65LvPMJeHkfnd0OXMw3ZP0YLX'
 
-# GIDs das abas — se der erro, troque os valores:
-# 0 = primeira aba, 1 = segunda aba (padrão Google Sheets publicado)
-# Caso as abas estejam invertidas, troque: GID_AUDITORIAS=1, GID_DADOS=0
-GID_AUDITORIAS = 1
+# GIDs das abas (número após gid= na URL pública de cada aba)
+GID_AUDITORIAS = 351234331
 GID_DADOS      = 0
 
 # Firebase — mantenha igual ao index.html
@@ -30,8 +30,10 @@ FIREBASE_CONFIG = """{
 #  FUNÇÕES AUXILIARES
 # ─────────────────────────────────────────────
 def fetch_csv(gid):
-    url = f'https://docs.google.com/spreadsheets/d/e/{SHEET_ID}/pub?output=csv&gid={gid}'
-    with urllib.request.urlopen(url) as r:
+    url = (f'https://docs.google.com/spreadsheets/d/e/{SHEET_ID}'
+           f'/pub?output=csv&gid={gid}')
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    with urllib.request.urlopen(req) as r:
         return pd.read_csv(StringIO(r.read().decode('utf-8')))
 
 def ultimo_dia_util(ref):
