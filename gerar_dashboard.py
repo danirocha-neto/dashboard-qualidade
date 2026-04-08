@@ -86,13 +86,40 @@ def gerar():
     df = fetch_csv(GID_AUDITORIAS)
     df.columns = [c.strip() for c in df.columns]
 
-    # Detectar coluna de data (pode variar)
-    col_data = next((c for c in df.columns if 'data' in c.lower()), None)
-    # Coluna de conformidade = Checklist da Qualificação
-    col_qual = next((c for c in df.columns
-                     if 'qualif' in c.lower() or 'qualidade' in c.lower()), None)
-    col_tipo  = next((c for c in df.columns if 'tipo' in c.lower()), None)
-    col_marca = next((c for c in df.columns if 'marca' in c.lower()), None)
+    print('Colunas encontradas:', df.columns.tolist())
+
+    # Detectar coluna de data — tenta nomes comuns, senão pega a primeira com 'dat'
+    POSSIVEIS_DATA  = ['Data da Auditoria', 'Data', 'data', 'DATA']
+    POSSIVEIS_QUAL  = ['Checklist da Qualificação', 'Checklist da Qualidade',
+                       'Checklist da Qualificacao', 'checklist da qualificação']
+    POSSIVEIS_TIPO  = ['Tipo de Auditoria', 'Tipo', 'tipo']
+    POSSIVEIS_MARCA = ['Marca', 'marca', 'MARCA']
+
+    def achar(colunas, possiveis):
+        for p in possiveis:
+            if p in colunas: return p
+        # fallback: busca parcial
+        for p in possiveis:
+            found = next((c for c in colunas if p.lower() in c.lower()), None)
+            if found: return found
+        return None
+
+    cols = df.columns.tolist()
+    col_data  = achar(cols, POSSIVEIS_DATA)
+    col_qual  = achar(cols, POSSIVEIS_QUAL)
+    col_tipo  = achar(cols, POSSIVEIS_TIPO)
+    col_marca = achar(cols, POSSIVEIS_MARCA)
+
+    print(f'col_data={col_data} | col_qual={col_qual} | col_tipo={col_tipo} | col_marca={col_marca}')
+
+    if not col_data:
+        raise ValueError(f'Coluna de data não encontrada. Colunas disponíveis: {cols}')
+    if not col_qual:
+        raise ValueError(f'Coluna de qualificação não encontrada. Colunas disponíveis: {cols}')
+    if not col_tipo:
+        raise ValueError(f'Coluna de tipo não encontrada. Colunas disponíveis: {cols}')
+    if not col_marca:
+        raise ValueError(f'Coluna de marca não encontrada. Colunas disponíveis: {cols}')
 
     df[col_data] = pd.to_datetime(df[col_data], dayfirst=True, errors='coerce')
     df = df.dropna(subset=[col_data, col_tipo])
@@ -217,20 +244,38 @@ def gerar():
     # ── 7. Diretorias ───────────────────────────
     df2 = fetch_csv(GID_DADOS)
     df2.columns = [c.strip() for c in df2.columns]
-    col_dia = next((c for c in df2.columns if 'dia' in c.lower() or 'data' in c.lower()), 'Dia')
+    print('Colunas Dados:', df2.columns.tolist())
+
+    # Detectar coluna de dia/data
+    col_dia = next((c for c in df2.columns if c.lower() in ['dia','data','date']), None)
+    if not col_dia:
+        col_dia = next((c for c in df2.columns if 'dia' in c.lower() or 'data' in c.lower()), None)
+    if not col_dia:
+        raise ValueError(f'Coluna de data não encontrada na aba Dados. Colunas: {df2.columns.tolist()}')
+
+    # Detectar coluna de média
+    col_media = next((c for c in df2.columns if 'dia' not in c.lower() and ('dia' in c.lower() or 'méd' in c.lower() or 'med' in c.lower() or c.strip()=='Média')), None)
+    if not col_media:
+        col_media = next((c for c in df2.columns if 'méd' in c.lower() or 'med' in c.lower()), 'Média')
+
+    # Detectar coluna de diretoria
+    col_dir = next((c for c in df2.columns if 'diret' in c.lower()), 'Diretoria')
+
+    print(f'col_dia={col_dia} | col_media={col_media} | col_dir={col_dir}')
+
     df2[col_dia] = pd.to_datetime(df2[col_dia], dayfirst=True, errors='coerce')
-    df2 = df2.dropna(subset=['Média', col_dia])
-    df2['Média'] = pd.to_numeric(df2['Média'], errors='coerce')
+    df2 = df2.dropna(subset=[col_media, col_dia])
+    df2[col_media] = pd.to_numeric(df2[col_media], errors='coerce')
 
     dr7  = df2[df2[col_dia].dt.date >= d7_inicio]
     dr30 = df2[df2[col_dia].dt.date >= d30_inicio]
-    dirs = sorted(df2['Diretoria'].dropna().unique())
+    dirs = sorted(df2[col_dir].dropna().unique())
     meta = int(df2['Meta'].iloc[0]) if 'Meta' in df2.columns else 200
 
     dir_js = 'const dirData = {\n'
     for d in dirs:
-        m7  = dr7[dr7['Diretoria']==d]['Média'].mean()
-        m30 = dr30[dr30['Diretoria']==d]['Média'].mean()
+        m7  = dr7[dr7[col_dir]==d][col_media].mean()
+        m30 = dr30[dr30[col_dir]==d][col_media].mean()
         v7  = f'{m7:.1f}' if not pd.isna(m7) else 'null'
         v30 = f'{m30:.1f}' if not pd.isna(m30) else 'null'
         dir_js += f'  "{d}":{{d7:{v7},d30:{v30}}},\n'
