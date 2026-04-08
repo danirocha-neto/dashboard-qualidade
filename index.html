@@ -82,24 +82,31 @@ tr:hover td{background:var(--surface2);}
 .qual-bloco-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px;padding-bottom:4px;border-bottom:.5px solid var(--border);}
 .qual-pos-title{color:var(--green);}.qual-neg-title{color:var(--red);}
 .qual-filters{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
-.qual-filter-input{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;}
+.qual-filter-input{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;transition:border-color .15s;}
+.qual-filter-input:focus{border-color:var(--blue);}
 .qual-filter-input::placeholder{color:var(--muted);}
 .qual-filter-date{width:115px;}.qual-filter-name{flex:1;min-width:90px;}
 .qual-filter-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);white-space:nowrap;}
 .behavior-list{overflow-y:auto;max-height:130px;display:flex;flex-direction:column;gap:4px;padding-right:2px;}
 .behavior-entry{background:var(--surface);border:.5px solid var(--border);border-radius:6px;padding:5px 7px;display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
 .behavior-meta{display:grid;grid-template-columns:1fr 110px auto;gap:4px;align-items:center;}
-.behavior-field{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;width:100%;}
+.behavior-field{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;transition:border-color .15s;width:100%;}
+.behavior-field:focus{border-color:var(--blue);}
 .behavior-field::placeholder{color:var(--muted);}
-.behavior-date{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;width:100%;}
+.behavior-date{padding:2px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;outline:none;height:22px;width:100%;transition:border-color .15s;}
+.behavior-date:focus{border-color:var(--blue);}
 .remove-btn{padding:1px 6px;font-size:10px;border:.5px solid var(--border);border-radius:4px;background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap;height:22px;}
 .remove-btn:hover{border-color:var(--red);color:var(--red);}
-.behavior-desc{width:100%;padding:3px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;resize:none;outline:none;min-height:28px;line-height:1.3;}
+.behavior-desc{width:100%;padding:3px 6px;border:.5px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:10px;resize:none;outline:none;min-height:28px;line-height:1.3;transition:border-color .15s;}
+.behavior-desc:focus{border-color:var(--blue);}
 .behavior-desc::placeholder{color:var(--muted);}
-.add-btn{align-self:flex-start;padding:2px 8px;font-size:10px;font-weight:600;color:var(--blue);background:transparent;border:.5px solid var(--blue);border-radius:4px;cursor:pointer;font-family:inherit;}
+.add-btn{align-self:flex-start;padding:2px 8px;font-size:10px;font-weight:600;color:var(--blue);background:transparent;border:.5px solid var(--blue);border-radius:4px;cursor:pointer;transition:background .15s;font-family:inherit;}
+.add-btn:hover{background:rgba(21,88,160,.07);}
 .add-btn.neg{color:var(--red);border-color:var(--red);}
+.add-btn.neg:hover{background:rgba(146,40,40,.07);}
 .obs-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:2px;}
-.obs-box{width:100%;padding:4px 7px;border:.5px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;resize:vertical;outline:none;min-height:28px;line-height:1.4;}
+.obs-box{width:100%;padding:4px 7px;border:.5px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font-family:inherit;font-size:10px;resize:vertical;outline:none;min-height:28px;line-height:1.4;transition:border-color .15s;}
+.obs-box:focus{border-color:var(--blue);}
 .obs-box::placeholder{color:var(--muted);}
 .no-results{font-size:10px;color:var(--muted);padding:6px 4px;text-align:center;}
 footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
@@ -110,18 +117,18 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 <header>
   <div>
     <h1>Dashboard de Qualidade</h1>
-    <div class="sub">Referência: <strong>08/04/2026</strong> &nbsp;·&nbsp; D-1 = 08/04 &nbsp;·&nbsp; D-7 desde 30/03 &nbsp;·&nbsp; D-30 desde 25/02 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
+    <div class="sub">Referência: <strong>06/04/2026</strong> &nbsp;·&nbsp; D-1 = 06/04 &nbsp;·&nbsp; D-7 desde 26/03 &nbsp;·&nbsp; D-30 desde 23/02 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
   </div>
-  <div class="badge">📊 804 auditorias · 08/04/2026</div>
+  <div class="badge">📊 732 auditorias · 06/04/2026</div>
 </header>
 
 <div class="section-quantitativa">
 <div class="section-label">Dados Quantitativos</div>
 <div class="metrics-row">
-  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">15</div><div class="metric-sub">08/04</div></div>
-  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">266</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
-  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">804</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
-  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">804</div><div class="metric-sub">Aba Auditorias</div></div>
+  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">24</div><div class="metric-sub">Hoje · 06/04</div></div>
+  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">274</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
+  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">732</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
+  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">732</div><div class="metric-sub">Aba Auditorias</div></div>
   <div class="metric"><div class="metric-label">Planos de Ação</div><div class="metric-value" id="contador-planos">0</div><div class="metric-sub">preenchidos</div></div>
   <div class="metric m-pos"><div class="metric-label">Comportamentos +</div><div class="metric-value" id="contador-pos">0</div><div class="metric-sub">positivos</div></div>
   <div class="metric m-neg"><div class="metric-label">Comportamentos −</div><div class="metric-value" id="contador-neg">0</div><div class="metric-sub">negativos</div></div>
@@ -129,19 +136,24 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 
 <div class="main-grid">
 <div class="col-left">
+
+  <!-- Quantidade por Tipo -->
   <div class="card">
     <div class="card-header"><div class="dot d-blue"></div><div class="card-title">Quantidade por Tipo de Auditoria</div></div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Tipo</th><th class="r">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th></tr></thead>
-      <tbody><tr><td class="tl">Cadência</td><td><span class="tz">—</span></td><td class="sep"><span class="tr">2</span></td><td class="sep tr">9</td></tr>
-<tr><td class="tl">Lead Time</td><td><span class="tz">—</span></td><td class="sep"><span class="tr">27</span></td><td class="sep tr">44</td></tr>
-<tr><td class="tl">Ligação</td><td><span class="tr">7</span></td><td class="sep"><span class="tr">202</span></td><td class="sep tr">448</td></tr>
-<tr><td class="tl">Spread.Chat</td><td><span class="tz">—</span></td><td class="sep"><span class="tr">14</span></td><td class="sep tr">171</td></tr>
-<tr><td class="tl">Volumetria</td><td><span class="tr">8</span></td><td class="sep"><span class="tr">21</span></td><td class="sep tr">132</td></tr>
-<tr class="tr-total"><td>Total</td><td class="tr">15</td><td class="tr sep">266</td><td class="tr sep">804</td></tr></tbody>
+      <tbody>
+        <tr><td class="tl">Ligação</td><td class="tr">18</td><td class="tr sep">202</td><td class="tr sep">406</td></tr>
+        <tr><td class="tl">Spread.Chat</td><td class="tz">—</td><td class="tr sep">34</td><td class="tr sep">171</td></tr>
+        <tr><td class="tl">Volumetria</td><td class="tz">—</td><td class="tr sep">4</td><td class="tr sep">111</td></tr>
+        <tr><td class="tl">Lead Time</td><td class="tr">6</td><td class="tr sep">31</td><td class="tr sep">37</td></tr>
+        <tr><td class="tl">Cadência</td><td class="tz">—</td><td class="tr sep">3</td><td class="tr sep">7</td></tr>
+        <tr class="tr-total"><td>Total</td><td class="tr">24</td><td class="tr sep">274</td><td class="tr sep">732</td></tr>
+      </tbody>
     </table></div>
   </div>
 
+  <!-- Conformidade por Tipo com filtro -->
   <div class="card">
     <div class="card-header">
       <div class="dot d-green"></div><div class="card-title">Conformidade por Tipo</div>
@@ -162,6 +174,7 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
     </table></div>
   </div>
 
+  <!-- Diretorias com seletor de meta -->
   <div class="card">
     <div class="card-header">
       <div class="dot d-purple"></div>
@@ -183,8 +196,10 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
       <tbody id="tbody-dir"></tbody>
     </table></div>
   </div>
+
 </div>
 
+<!-- COLUNA DIREITA: Marcas -->
 <div class="col-right">
   <div class="card" id="card-marcas">
     <div class="card-header">
@@ -215,6 +230,7 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 </div>
 </div>
 
+<!-- ANÁLISE QUALITATIVA -->
 <div class="section-qualitativa">
 <div class="section-label" style="margin-bottom:8px;">Análise Qualitativa de Comportamento</div>
 <div class="qual-grid">
@@ -253,22 +269,22 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 </div>
 </div>
 
-<footer>Gerado automaticamente em 08/04/2026 · Dashboard de Qualidade · 804 auditorias · fins de semana ignorados</footer>
+<footer>Gerado em 06/04/2026 · Dashboard de Qualidade · 732 auditorias · fins de semana ignorados</footer>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const app = initializeApp({
-  apiKey: "AIzaSyBZQPAI_iae5FxROXfBH3TK3yqwJuRlRws",
-  authDomain: "dashboard-qualidade-f96d2.firebaseapp.com",
-  projectId: "dashboard-qualidade-f96d2",
-  storageBucket: "dashboard-qualidade-f96d2.firebasestorage.app",
-  messagingSenderId: "574600100930",
-  appId: "1:574600100930:web:b9c5cc2717abd5873541db"
+  apiKey:"AIzaSyBZQPAI_iae5FxROXfBH3TK3yqwJuRlRws",
+  authDomain:"dashboard-qualidade-f96d2.firebaseapp.com",
+  projectId:"dashboard-qualidade-f96d2",
+  storageBucket:"dashboard-qualidade-f96d2.firebasestorage.app",
+  messagingSenderId:"574600100930",
+  appId:"1:574600100930:web:b9c5cc2717abd5873541db"
 });
-const db  = getFirestore(app);
-const _c  = {};
+const db = getFirestore(app);
+const _c = {};
 
 async function fbSave(k,v){_c[k]=v;try{await setDoc(doc(db,'dashboard',k),{value:v});}catch(e){}}
 async function fbLoad(k,def=''){
@@ -276,140 +292,234 @@ async function fbLoad(k,def=''){
   try{const s=await getDoc(doc(db,'dashboard',k));const v=s.exists()?s.data().value:def;_c[k]=v;return v;}catch(e){return def;}
 }
 
-/* ── DADOS ── */
+/* ===== DADOS CONFORMIDADE POR TIPO ===== */
 const confTipoPeriodos = {
-  d1: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:7,conf:71.4,nao:28.6,cor:0.0,modo:"lig"},
-    {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Volumetria",tot:8,conf:92,nao:100.0,cor:0.0,modo:"esp"}],
-  d7: [{tipo:"Cadência",tot:2,conf:98,nao:100.0,cor:0.0,modo:"esp"},
-    {tipo:"Lead Time",tot:27,conf:78,nao:81.5,cor:18.5,modo:"esp"},
-    {tipo:"Ligação",tot:202,conf:94.6,nao:5.0,cor:0.5,modo:"lig"},
-    {tipo:"Spread.Chat",tot:14,conf:86,nao:100.0,cor:0.0,modo:"esp"},
-    {tipo:"Volumetria",tot:21,conf:79,nao:100.0,cor:0.0,modo:"esp"}],
-  d30: [{tipo:"Cadência",tot:9,conf:91,nao:100.0,cor:0.0,modo:"esp"},
-    {tipo:"Lead Time",tot:44,conf:61,nao:88.6,cor:11.4,modo:"esp"},
-    {tipo:"Ligação",tot:448,conf:88.6,nao:11.2,cor:0.2,modo:"lig"},
-    {tipo:"Spread.Chat",tot:171,conf:0,nao:67.3,cor:0.0,modo:"esp"},
-    {tipo:"Volumetria",tot:132,conf:0,nao:99.2,cor:0.0,modo:"esp"}]
+  d1: [
+    {tipo:"Cadência",   tot:0,    conf:null, nao:null, cor:null, modo:"esp"},
+    {tipo:"Lead Time",  tot:6,    conf:0.0,  nao:100.0,cor:0.0,  modo:"esp"},
+    {tipo:"Ligação",    tot:18,   conf:88.9, nao:5.6,  cor:5.6,  modo:"lig"},
+    {tipo:"Spread.Chat",tot:0,    conf:null, nao:null, cor:null, modo:"esp"},
+    {tipo:"Volumetria", tot:0,    conf:null, nao:null, cor:null, modo:"esp"},
+  ],
+  d7: [
+    {tipo:"Cadência",   tot:3,    conf:0.0,  nao:100.0,cor:0.0,  modo:"esp"},
+    {tipo:"Lead Time",  tot:31,   conf:0.0,  nao:83.9, cor:16.1, modo:"esp"},
+    {tipo:"Ligação",    tot:202,  conf:91.6, nao:7.9,  cor:0.5,  modo:"lig"},
+    {tipo:"Spread.Chat",tot:34,   conf:32.4, nao:67.6, cor:0.0,  modo:"esp"},
+    {tipo:"Volumetria", tot:4,    conf:0.0,  nao:100.0,cor:0.0,  modo:"esp"},
+  ],
+  d30: [
+    {tipo:"Cadência",   tot:7,    conf:0.0,  nao:100.0,cor:0.0,  modo:"esp"},
+    {tipo:"Lead Time",  tot:37,   conf:0.0,  nao:86.5, cor:13.5, modo:"esp"},
+    {tipo:"Ligação",    tot:406,  conf:88.2, nao:11.6, cor:0.2,  modo:"lig"},
+    {tipo:"Spread.Chat",tot:171,  conf:32.7, nao:67.3, cor:0.0,  modo:"esp"},
+    {tipo:"Volumetria", tot:111,  conf:0.9,  nao:99.1, cor:0.0,  modo:"esp"},
+  ]
 };
 
-const confLigacao    = {"Ecoville":{conf:94.2,nao:5.8,cor:0.0,modo:"lig"},"Fast Tennis":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Airlocker":{conf:92.9,nao:3.6,cor:3.6,modo:"lig"},"Maria Lavadeira":{conf:88.4,nao:11.6,cor:0.0,modo:"lig"},"Shelf":{conf:68.4,nao:31.6,cor:0.0,modo:"lig"},"Asia Source":{conf:82.4,nao:17.6,cor:0.0,modo:"lig"},"Locar X":{conf:83.9,nao:16.1,cor:0.0,modo:"lig"},"La Bolaria":{conf:92.9,nao:7.1,cor:0.0,modo:"lig"},"Atend Já":{conf:44.4,nao:55.6,cor:0.0,modo:"lig"},"Mestre da Obra":{conf:92.3,nao:7.7,cor:0.0,modo:"lig"},"Saúde Livre":{conf:91.7,nao:8.3,cor:0.0,modo:"lig"},"Brumed":{conf:90.0,nao:10.0,cor:0.0,modo:"lig"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Suav":{conf:90.9,nao:9.1,cor:0.0,modo:"lig"},"Doctor Fit":{conf:81.8,nao:18.2,cor:0.0,modo:"lig"},"Hermanito":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Lypedepil":{conf:66.7,nao:33.3,cor:0.0,modo:"lig"},"4 Beach":{conf:66.7,nao:33.3,cor:0.0,modo:"lig"},"Ecoville Lavanderia":{conf:0.0,nao:100.0,cor:0.0,modo:"lig"},"Mentoria":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre da Tintas":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Yang":null,"Asia":null,"Pagamos Já":null,"Mestre das Tintas":null};
-const confSpreadChat = {"Ecoville":{conf:88,nao:85.7,cor:0.0,modo:"esp"},"Fast Tennis":{conf:90,nao:90.9,cor:0.0,modo:"esp"},"Airlocker":{conf:83,nao:89.5,cor:0.0,modo:"esp"},"Maria Lavadeira":{conf:85,nao:88.2,cor:0.0,modo:"esp"},"Shelf":{conf:85,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":{conf:97,nao:50.0,cor:0.0,modo:"esp"},"Locar X":{conf:93,nao:70.0,cor:0.0,modo:"esp"},"La Bolaria":{conf:93,nao:53.8,cor:0.0,modo:"esp"},"Atend Já":{conf:95,nao:62.5,cor:0.0,modo:"esp"},"Mestre da Obra":{conf:94,nao:75.0,cor:0.0,modo:"esp"},"Saúde Livre":{conf:96,nao:50.0,cor:0.0,modo:"esp"},"Brumed":{conf:97,nao:60.0,cor:0.0,modo:"esp"},"Sua Hora Unha":{conf:94,nao:75.0,cor:0.0,modo:"esp"},"Suav":{conf:97,nao:50.0,cor:0.0,modo:"esp"},"Doctor Fit":{conf:100,nao:0.0,cor:0.0,modo:"esp"},"Hermanito":{conf:98,nao:25.0,cor:0.0,modo:"esp"},"Calzoon":{conf:100,nao:0.0,cor:0.0,modo:"esp"},"Lypedepil":null,"4 Beach":null,"Ecoville Lavanderia":{conf:100,nao:0.0,cor:0.0,modo:"esp"},"Mentoria":{conf:100,nao:0.0,cor:0.0,modo:"esp"},"Mestre da Tintas":null,"Yang":{conf:100,nao:0.0,cor:0.0,modo:"esp"},"Asia":null,"Pagamos Já":null,"Mestre das Tintas":null};
-const confVolumetria = {"Ecoville":{conf:86,nao:100.0,cor:0.0,modo:"esp"},"Fast Tennis":{conf:89,nao:100.0,cor:0.0,modo:"esp"},"Airlocker":{conf:80,nao:100.0,cor:0.0,modo:"esp"},"Maria Lavadeira":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Shelf":{conf:86,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":{conf:96,nao:100.0,cor:0.0,modo:"esp"},"Locar X":{conf:95,nao:100.0,cor:0.0,modo:"esp"},"La Bolaria":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Atend Já":{conf:87,nao:100.0,cor:0.0,modo:"esp"},"Mestre da Obra":{conf:90,nao:100.0,cor:0.0,modo:"esp"},"Saúde Livre":null,"Brumed":{conf:95,nao:100.0,cor:0.0,modo:"esp"},"Sua Hora Unha":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Suav":null,"Doctor Fit":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Hermanito":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Calzoon":{conf:96,nao:100.0,cor:0.0,modo:"esp"},"Lypedepil":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"4 Beach":{conf:96,nao:80.0,cor:0.0,modo:"esp"},"Ecoville Lavanderia":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Mentoria":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Mestre da Tintas":null,"Yang":null,"Asia":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Pagamos Já":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Mestre das Tintas":{conf:99,nao:100.0,cor:0.0,modo:"esp"}};
-const confLeadTime   = {"Ecoville":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Fast Tennis":{conf:92,nao:100.0,cor:0.0,modo:"esp"},"Airlocker":{conf:97,nao:75.0,cor:25.0,modo:"esp"},"Maria Lavadeira":{conf:95,nao:71.4,cor:28.6,modo:"esp"},"Shelf":{conf:96,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Locar X":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"La Bolaria":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Atend Já":{conf:99,nao:50.0,cor:50.0,modo:"esp"},"Mestre da Obra":{conf:96,nao:100.0,cor:0.0,modo:"esp"},"Saúde Livre":{conf:99,nao:50.0,cor:50.0,modo:"esp"},"Brumed":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Sua Hora Unha":null,"Suav":null,"Doctor Fit":null,"Hermanito":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Calzoon":null,"Lypedepil":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"4 Beach":null,"Ecoville Lavanderia":null,"Mentoria":null,"Mestre da Tintas":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Yang":null,"Asia":null,"Pagamos Já":null,"Mestre das Tintas":null};
-const confCadencia   = {"Ecoville":null,"Fast Tennis":null,"Airlocker":null,"Maria Lavadeira":null,"Shelf":null,"Asia Source":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Locar X":null,"La Bolaria":null,"Atend Já":{conf:96,nao:100.0,cor:0.0,modo:"esp"},"Mestre da Obra":null,"Saúde Livre":null,"Brumed":null,"Sua Hora Unha":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Suav":null,"Doctor Fit":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Hermanito":null,"Calzoon":null,"Lypedepil":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"4 Beach":null,"Ecoville Lavanderia":null,"Mentoria":null,"Mestre da Tintas":null,"Yang":null,"Asia":null,"Pagamos Já":null,"Mestre das Tintas":null};
-const confgeral      = {"Ecoville":{conf:75.0,nao:25.0,cor:0.0,modo:"geral"},"Fast Tennis":{conf:62.8,nao:37.2,cor:0.0,modo:"geral"},"Airlocker":{conf:39.4,nao:57.7,cor:2.8,modo:"geral"},"Maria Lavadeira":{conf:58.0,nao:39.1,cor:2.9,modo:"geral"},"Shelf":{conf:25.0,nao:75.0,cor:0.0,modo:"geral"},"Asia Source":{conf:66.0,nao:34.0,cor:0.0,modo:"geral"},"Locar X":{conf:61.7,nao:38.3,cor:0.0,modo:"geral"},"La Bolaria":{conf:68.1,nao:31.9,cor:0.0,modo:"geral"},"Atend Já":{conf:19.4,nao:77.8,cor:2.8,modo:"geral"},"Mestre da Obra":{conf:40.0,nao:60.0,cor:0.0,modo:"geral"},"Saúde Livre":{conf:76.5,nao:20.6,cor:2.9,modo:"geral"},"Brumed":{conf:62.5,nao:37.5,cor:0.0,modo:"geral"},"Sua Hora Unha":{conf:52.4,nao:47.6,cor:0.0,modo:"geral"},"Suav":{conf:76.5,nao:23.5,cor:0.0,modo:"geral"},"Doctor Fit":{conf:73.3,nao:26.7,cor:0.0,modo:"geral"},"Hermanito":{conf:50.0,nao:50.0,cor:0.0,modo:"geral"},"Calzoon":{conf:69.2,nao:30.8,cor:0.0,modo:"geral"},"Lypedepil":{conf:22.2,nao:77.8,cor:0.0,modo:"geral"},"4 Beach":{conf:37.5,nao:62.5,cor:0.0,modo:"geral"},"Ecoville Lavanderia":{conf:28.6,nao:71.4,cor:0.0,modo:"geral"},"Mentoria":{conf:66.7,nao:33.3,cor:0.0,modo:"geral"},"Mestre da Tintas":{conf:50.0,nao:50.0,cor:0.0,modo:"geral"},"Yang":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Asia":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"},"Pagamos Já":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"},"Mestre das Tintas":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"}};
+function fmtV(v, cls){ if(v===null||v===undefined) return '<span class="tz">—</span>'; return `<span class="${cls}">${String(v).replace('.',',')}${typeof v==='number'&&v<10?'':''}</span>`; }
 
-const marcasData = [
-  {nome:"Ecoville",d1:3,d7:56,d30:132,key:"pa-Ecoville"},
-  {nome:"Fast Tennis",d1:1,d7:41,d30:78,key:"pa-FastTennis"},
-  {nome:"Airlocker",d1:0,d7:23,d30:71,key:"pa-Airlocker"},
-  {nome:"Maria Lavadeira",d1:1,d7:17,d30:69,key:"pa-MariaLavadeira"},
-  {nome:"Shelf",d1:5,d7:15,d30:52,key:"pa-Shelf"},
-  {nome:"Asia Source",d1:0,d7:18,d30:47,key:"pa-AsiaSource"},
-  {nome:"Locar X",d1:1,d7:16,d30:47,key:"pa-LocarX"},
-  {nome:"La Bolaria",d1:0,d7:12,d30:47,key:"pa-LaBolaria"},
-  {nome:"Atend Já",d1:0,d7:6,d30:36,key:"pa-AtendJ"},
-  {nome:"Mestre da Obra",d1:0,d7:10,d30:35,key:"pa-MestredaObra"},
-  {nome:"Saúde Livre",d1:0,d7:15,d30:34,key:"pa-SadeLivre"},
-  {nome:"Brumed",d1:0,d7:9,d30:32,key:"pa-Brumed"},
-  {nome:"Sua Hora Unha",d1:2,d7:5,d30:21,key:"pa-SuaHoraUnha"},
-  {nome:"Suav",d1:1,d7:9,d30:17,key:"pa-Suav"},
-  {nome:"Doctor Fit",d1:0,d7:2,d30:15,key:"pa-DoctorFit"},
-  {nome:"Hermanito",d1:0,d7:2,d30:14,key:"pa-Hermanito"},
-  {nome:"Calzoon",d1:0,d7:1,d30:13,key:"pa-Calzoon"},
-  {nome:"Lypedepil",d1:0,d7:2,d30:9,key:"pa-Lypedepil"},
-  {nome:"4 Beach",d1:0,d7:1,d30:8,key:"pa-4Beach"},
-  {nome:"Ecoville Lavanderia",d1:0,d7:1,d30:7,key:"pa-EcovilleLavanderia"},
-  {nome:"Mentoria",d1:0,d7:0,d30:6,key:"pa-Mentoria"},
-  {nome:"Mestre da Tintas",d1:0,d7:1,d30:2,key:"pa-MestredaTintas"},
-  {nome:"Yang",d1:0,d7:0,d30:2,key:"pa-Yang"},
-  {nome:"Asia",d1:0,d7:0,d30:1,key:"pa-Asia"},
-  {nome:"Pagamos Já",d1:0,d7:0,d30:1,key:"pa-PagamosJ"},
-  {nome:"Mestre das Tintas",d1:1,d7:1,d30:1,key:"pa-MestredasTintas"},
-];
-const dirData = {
-  "Camaleões":{d7:null,d30:null},
-  "Fúria":{d7:null,d30:null},
-  "Guardiões":{d7:null,d30:null},
-};
-
-const mapaConf = {Ligacao:confLigacao,SpreadChat:confSpreadChat,Volumetria:confVolumetria,LeadTime:confLeadTime,Cadencia:confCadencia,geral:confgeral};
-const labelTipo = {Ligacao:'Ligação',SpreadChat:'Spread.Chat',Volumetria:'Volumetria',LeadTime:'Lead Time',Cadencia:'Cadência',geral:'Geral'};
-let tipoAtual='Ligacao', metaAtual=200;
-
-/* ── CONFORMIDADE POR TIPO ── */
 function renderConf(p){
   ['d1','d7','d30'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===p));
   document.getElementById('tbody-conf').innerHTML = confTipoPeriodos[p].map(r=>{
     if(r.tot===0) return `<tr><td class="tl">${r.tipo}</td><td class="tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td></tr>`;
-    if(r.modo==='lig'){
-      const cs=`<span class="c-g">${String(r.conf).replace('.',',')}%</span>`;
-      const ns=r.nao>0?`<span class="c-r">${String(r.nao).replace('.',',')}%</span>`:'<span class="tz">—</span>';
-      const cors=r.cor>0?`<span class="c-a">${String(r.cor).replace('.',',')}%</span>`:'<span class="tz">—</span>';
-      return `<tr><td class="tl">${r.tipo}</td><td class="tr">${r.tot}</td><td class="sep">${cs}</td><td class="sep">${ns}</td><td class="sep">${cors}</td></tr>`;
-    } else {
-      const cs=`<span class="${r.conf>=90?'c-g':r.conf>=70?'c-a':'c-r'}">${r.conf}%</span>`;
-      const ns=r.nao>0?`<span class="c-r">${String(r.nao).replace('.',',')}%</span>`:'<span class="tz">—</span>';
-      const cors=r.cor>0?`<span class="c-a">${String(r.cor).replace('.',',')}%</span>`:'<span class="tz">—</span>';
-      return `<tr><td class="tl">${r.tipo}</td><td class="tr">${r.tot}</td><td class="sep">${cs}</td><td class="sep">${ns}</td><td class="sep">${cors}</td></tr>`;
-    }
+    /* Todos os tipos: conf, nao, cor são % reais que somam 100% */
+    const cs=`<span class="${r.conf>=90?'c-g':r.conf>=70?'c-a':'c-r'}">${String(r.conf).replace('.',',')}%</span>`;
+    const ns=r.nao>0?`<span class="c-r">${String(r.nao).replace('.',',')}%</span>`:'<span class="tz">—</span>';
+    const cors=r.cor>0?`<span class="c-a">${String(r.cor).replace('.',',')}%</span>`:'<span class="tz">—</span>';
+    return `<tr><td class="tl">${r.tipo}</td><td class="tr">${r.tot}</td><td class="sep">${cs}</td><td class="sep">${ns}</td><td class="sep">${cors}</td></tr>`;
   }).join('');
 }
 window.setConf = p => renderConf(p);
 renderConf('d30');
 
-/* ── DIRETORIAS ── */
-function barDir(val,sep=false){
-  if(!val||val==='null')return`<td class="${sep?'sep ':''}tz">—</td><td>—</td>`;
-  const pct=Math.min(parseFloat(val)/metaAtual*100,100);
-  const col=pct>=100?'var(--green)':pct>=85?'var(--amber)':'var(--red)';
-  return`<td class="tr${sep?' sep':''}">${String(val).replace('.',',')}</td>
+/* ===== DIRETORIAS ===== */
+const dirData = {
+  'Fúria':    {d7:167.7, d30:156.4},
+  'Guardiões':{d7:139.2, d30:126.7},
+  'Camaleões':{d7:114.7, d30:108.6}
+};
+let metaAtual = 200;
+
+function barDir(val, sep=false){
+  if(!val) return `<td class="${sep?'sep ':' '}tz">—</td><td>—</td>`;
+  const pct = Math.min(val/metaAtual*100, 100);
+  const col = pct>=100 ? 'var(--green)' : pct>=85 ? 'var(--amber)' : 'var(--red)';
+  const valS = String(val).replace('.',',');
+  const pctS = pct.toFixed(1).replace('.',',')+'%';
+  return `<td class="tr${sep?' sep':''}">${valS}</td>
     <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pct,100).toFixed(1)}%;background:${col}"></div></div>
-    <span class="bar-pct" style="color:${col}">${pct.toFixed(1).replace('.',',')}%</span></div></td>`;
+    <span class="bar-pct" style="color:${col}">${pctS}</span></div></td>`;
 }
+
 function renderDir(){
-  document.getElementById('tbody-dir').innerHTML=Object.entries(dirData).map(([d,v])=>
+  document.getElementById('tbody-dir').innerHTML = Object.entries(dirData).map(([d,v])=>
     `<tr><td class="tl">${d}</td>${barDir(v.d7)}${barDir(v.d30,true)}</tr>`
   ).join('');
 }
-window.setMeta=v=>{metaAtual=parseInt(v);renderDir();};
+window.setMeta = v => { metaAtual=parseInt(v); renderDir(); };
 renderDir();
 
-/* ── MARCAS ── */
-function confCell(nome,tipo){
-  const d=mapaConf[tipo]?.[nome];
-  if(d===null||d===undefined)return'<div class="conf-cell"><span class="conf-na">Sem dados</span></div>';
-  const ok=d.conf>=90;
-  const lbl=`${d.conf}% Conf.`;
-  return`<div class="conf-cell"><span class="bola ${ok?'bola-ok':'bola-red'}"></span><span class="conf-pct ${ok?'conf-ok':'conf-red'}">${lbl}</span></div>`;
+/* ===== DADOS MARCAS ===== */
+const marcasData = [
+  {nome:"Ecoville",d1:4,d7:47,d30:119,key:"pa-Ecoville"},
+  {nome:"Airlocker",d1:4,d7:24,d30:66,key:"pa-Airlocker"},
+  {nome:"Maria Lavadeira",d1:2,d7:22,d30:66,key:"pa-MariaLavadeira"},
+  {nome:"Fast Tennis",d1:2,d7:29,d30:60,key:"pa-FastTennis"},
+  {nome:"Asia Source",d1:2,d7:22,d30:45,key:"pa-AsiaSource"},
+  {nome:"Locar X",d1:4,d7:22,d30:45,key:"pa-LocarX"},
+  {nome:"La Bolaria",d1:1,d7:18,d30:45,key:"pa-LaBolaria"},
+  {nome:"Shelf",d1:1,d7:9,d30:43,key:"pa-Shelf"},
+  {nome:"Atend Já",d1:0,d7:13,d30:35,key:"pa-AtendJ"},
+  {nome:"Mestre da Obra",d1:0,d7:13,d30:34,key:"pa-MestredaObra"},
+  {nome:"Brumed",d1:1,d7:10,d30:31,key:"pa-Brumed"},
+  {nome:"Saúde Livre",d1:2,d7:18,d30:29,key:"pa-SadeLivre"},
+  {nome:"Sua Hora Unha",d1:0,d7:5,d30:17,key:"pa-SuaHoraUnha"},
+  {nome:"Suav",d1:1,d7:8,d30:16,key:"pa-Suav"},
+  {nome:"Doctor Fit",d1:0,d7:3,d30:14,key:"pa-DoctorFit"},
+  {nome:"Hermanito",d1:0,d7:4,d30:13,key:"pa-Hermanito"},
+  {nome:"Calzoon",d1:0,d7:0,d30:12,key:"pa-Calzoon"},
+  {nome:"4 Beach",d1:0,d7:1,d30:8,key:"pa-4Beach"},
+  {nome:"Lypedepil",d1:0,d7:1,d30:7,key:"pa-Lypedepil"},
+  {nome:"Ecoville Lavanderia",d1:0,d7:1,d30:7,key:"pa-EcovilleLavanderia"},
+  {nome:"Mentoria",d1:0,d7:0,d30:6,key:"pa-Mentoria"},
+  {nome:"Saúde Livre Vacinas",d1:0,d7:0,d30:2,key:"pa-SadeLivreVacinas"},
+  {nome:"Yang",d1:0,d7:0,d30:2,key:"pa-Yang"},
+  {nome:"Asia",d1:0,d7:0,d30:1,key:"pa-Asia"},
+  {nome:"Mestre da Tintas",d1:0,d7:1,d30:1,key:"pa-MestredaTintas"},
+  {nome:"Pagamos Já",d1:0,d7:0,d30:1,key:"pa-PagamosJ"},
+];
+
+const confLigacao = {
+  "Ecoville":{conf:94.6,nao:5.4,cor:0.0,modo:"lig"},"Airlocker":{conf:92.3,nao:3.8,cor:3.8,modo:"lig"},
+  "Maria Lavadeira":{conf:87.5,nao:12.5,cor:0.0,modo:"lig"},"Fast Tennis":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},
+  "Asia Source":{conf:82.4,nao:17.6,cor:0.0,modo:"lig"},"Locar X":{conf:86.7,nao:13.3,cor:0.0,modo:"lig"},
+  "La Bolaria":{conf:92.6,nao:7.4,cor:0.0,modo:"lig"},"Shelf":{conf:64.7,nao:35.3,cor:0.0,modo:"lig"},
+  "Atend Já":{conf:44.4,nao:55.6,cor:0.0,modo:"lig"},"Mestre da Obra":{conf:92.3,nao:7.7,cor:0.0,modo:"lig"},
+  "Brumed":{conf:90.0,nao:10.0,cor:0.0,modo:"lig"},"Saúde Livre":{conf:94.7,nao:5.3,cor:0.0,modo:"lig"},
+  "Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Suav":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},
+  "Doctor Fit":{conf:80.0,nao:20.0,cor:0.0,modo:"lig"},"Hermanito":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},
+  "Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"4 Beach":{conf:66.7,nao:33.3,cor:0.0,modo:"lig"},
+  "Lypedepil":{conf:50.0,nao:50.0,cor:0.0,modo:"lig"},"Ecoville Lavanderia":{conf:0.0,nao:100.0,cor:0.0,modo:"lig"},
+  "Mentoria":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Saúde Livre Vacinas":{conf:50.0,nao:50.0,cor:0.0,modo:"lig"},
+  "Yang":null,"Asia":null,"Mestre da Tintas":null,"Pagamos Já":null,
+};
+const confSpreadChat = {
+  "Ecoville":{conf:88,nao:12,cor:0,modo:"esp"},"Airlocker":{conf:83,nao:17,cor:0,modo:"esp"},
+  "Maria Lavadeira":{conf:85,nao:15,cor:0,modo:"esp"},"Fast Tennis":{conf:90,nao:10,cor:0,modo:"esp"},
+  "Asia Source":{conf:97,nao:3,cor:0,modo:"esp"},"Locar X":{conf:93,nao:7,cor:0,modo:"esp"},
+  "La Bolaria":{conf:93,nao:7,cor:0,modo:"esp"},"Shelf":{conf:85,nao:15,cor:0,modo:"esp"},
+  "Atend Já":{conf:95,nao:5,cor:0,modo:"esp"},"Mestre da Obra":{conf:94,nao:6,cor:0,modo:"esp"},
+  "Brumed":{conf:97,nao:3,cor:0,modo:"esp"},"Saúde Livre":{conf:96,nao:4,cor:0,modo:"esp"},
+  "Sua Hora Unha":{conf:94,nao:6,cor:0,modo:"esp"},"Suav":{conf:97,nao:3,cor:0,modo:"esp"},
+  "Doctor Fit":{conf:100,nao:0,cor:0,modo:"esp"},"Hermanito":{conf:98,nao:2,cor:0,modo:"esp"},
+  "Calzoon":{conf:100,nao:0,cor:0,modo:"esp"},"4 Beach":null,"Lypedepil":null,
+  "Ecoville Lavanderia":{conf:100,nao:0,cor:0,modo:"esp"},"Mentoria":{conf:100,nao:0,cor:0,modo:"esp"},
+  "Saúde Livre Vacinas":null,"Yang":{conf:100,nao:0,cor:0,modo:"esp"},
+  "Asia":null,"Mestre da Tintas":null,"Pagamos Já":null,
+};
+const confVolumetria = {
+  "Ecoville":{conf:88,nao:12,cor:0,modo:"esp"},"Airlocker":{conf:83,nao:17,cor:0,modo:"esp"},
+  "Maria Lavadeira":{conf:98,nao:2,cor:0,modo:"esp"},"Fast Tennis":{conf:91,nao:9,cor:0,modo:"esp"},
+  "Asia Source":{conf:97,nao:3,cor:0,modo:"esp"},"Locar X":{conf:96,nao:4,cor:0,modo:"esp"},
+  "La Bolaria":{conf:98,nao:2,cor:0,modo:"esp"},"Shelf":{conf:91,nao:9,cor:0,modo:"esp"},
+  "Atend Já":{conf:88,nao:12,cor:0,modo:"esp"},"Mestre da Obra":{conf:91,nao:9,cor:0,modo:"esp"},
+  "Brumed":{conf:95,nao:5,cor:0,modo:"esp"},"Saúde Livre":null,
+  "Sua Hora Unha":{conf:98,nao:2,cor:0,modo:"esp"},"Suav":null,
+  "Doctor Fit":{conf:99,nao:1,cor:0,modo:"esp"},"Hermanito":{conf:98,nao:2,cor:0,modo:"esp"},
+  "Calzoon":{conf:97,nao:3,cor:0,modo:"esp"},"4 Beach":{conf:96,nao:4,cor:0,modo:"esp"},
+  "Lypedepil":{conf:97,nao:3,cor:0,modo:"esp"},"Ecoville Lavanderia":{conf:97,nao:3,cor:0,modo:"esp"},
+  "Mentoria":{conf:98,nao:2,cor:0,modo:"esp"},"Saúde Livre Vacinas":null,"Yang":null,
+  "Asia":{conf:99,nao:1,cor:0,modo:"esp"},"Mestre da Tintas":null,"Pagamos Já":{conf:99,nao:1,cor:0,modo:"esp"},
+};
+const confLeadTime = {
+  "Ecoville":{conf:99,nao:1,cor:0,modo:"esp"},"Airlocker":{conf:97,nao:3,cor:1,modo:"esp"},
+  "Maria Lavadeira":{conf:95,nao:5,cor:2,modo:"esp"},"Fast Tennis":{conf:95,nao:5,cor:0,modo:"esp"},
+  "Asia Source":{conf:99,nao:1,cor:0,modo:"esp"},"Locar X":{conf:99,nao:1,cor:0,modo:"esp"},
+  "La Bolaria":{conf:97,nao:3,cor:0,modo:"esp"},"Shelf":{conf:98,nao:2,cor:0,modo:"esp"},
+  "Atend Já":{conf:99,nao:1,cor:1,modo:"esp"},"Mestre da Obra":{conf:96,nao:4,cor:0,modo:"esp"},
+  "Brumed":{conf:99,nao:1,cor:0,modo:"esp"},"Saúde Livre":{conf:99,nao:1,cor:1,modo:"esp"},
+  "Sua Hora Unha":null,"Suav":null,"Doctor Fit":null,
+  "Hermanito":{conf:98,nao:2,cor:0,modo:"esp"},"Calzoon":null,"4 Beach":null,
+  "Lypedepil":{conf:99,nao:1,cor:0,modo:"esp"},"Ecoville Lavanderia":null,"Mentoria":null,
+  "Saúde Livre Vacinas":null,"Yang":null,"Asia":null,
+  "Mestre da Tintas":{conf:99,nao:1,cor:0,modo:"esp"},"Pagamos Já":null,
+};
+const confCadencia = {
+  "Ecoville":null,"Airlocker":null,"Maria Lavadeira":null,"Fast Tennis":null,
+  "Asia Source":{conf:99,nao:1,cor:0,modo:"esp"},"Locar X":null,"La Bolaria":null,"Shelf":null,
+  "Atend Já":{conf:96,nao:4,cor:0,modo:"esp"},"Mestre da Obra":null,"Brumed":null,
+  "Saúde Livre":null,"Sua Hora Unha":null,"Suav":null,
+  "Doctor Fit":{conf:99,nao:1,cor:0,modo:"esp"},"Hermanito":null,"Calzoon":null,"4 Beach":null,
+  "Lypedepil":{conf:99,nao:1,cor:0,modo:"esp"},"Ecoville Lavanderia":null,"Mentoria":null,
+  "Saúde Livre Vacinas":null,"Yang":null,"Asia":null,"Mestre da Tintas":null,"Pagamos Já":null,
+};
+const confgeral = {
+  "Ecoville":{conf:74.8,nao:25.2,cor:0.0,modo:"geral"},"Airlocker":{conf:39.4,nao:57.6,cor:3.0,modo:"geral"},
+  "Maria Lavadeira":{conf:56.1,nao:40.9,cor:3.0,modo:"geral"},"Fast Tennis":{conf:60.0,nao:40.0,cor:0.0,modo:"geral"},
+  "Asia Source":{conf:68.9,nao:31.1,cor:0.0,modo:"geral"},"Locar X":{conf:64.4,nao:35.6,cor:0.0,modo:"geral"},
+  "La Bolaria":{conf:68.9,nao:31.1,cor:0.0,modo:"geral"},"Shelf":{conf:25.6,nao:74.4,cor:0.0,modo:"geral"},
+  "Atend Já":{conf:20.0,nao:77.1,cor:2.9,modo:"geral"},"Mestre da Obra":{conf:41.2,nao:58.8,cor:0.0,modo:"geral"},
+  "Brumed":{conf:64.5,nao:35.5,cor:0.0,modo:"geral"},"Saúde Livre":{conf:75.9,nao:20.7,cor:3.4,modo:"geral"},
+  "Sua Hora Unha":{conf:52.9,nao:47.1,cor:0.0,modo:"geral"},"Suav":{conf:81.2,nao:18.8,cor:0.0,modo:"geral"},
+  "Doctor Fit":{conf:71.4,nao:28.6,cor:0.0,modo:"geral"},"Hermanito":{conf:53.8,nao:46.2,cor:0.0,modo:"geral"},
+  "Calzoon":{conf:75.0,nao:25.0,cor:0.0,modo:"geral"},"4 Beach":{conf:37.5,nao:62.5,cor:0.0,modo:"geral"},
+  "Lypedepil":{conf:14.3,nao:85.7,cor:0.0,modo:"geral"},"Ecoville Lavanderia":{conf:28.6,nao:71.4,cor:0.0,modo:"geral"},
+  "Mentoria":{conf:66.7,nao:33.3,cor:0.0,modo:"geral"},"Saúde Livre Vacinas":{conf:50.0,nao:50.0,cor:0.0,modo:"geral"},
+  "Yang":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Asia":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"},
+  "Mestre da Tintas":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"},"Pagamos Já":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"},
+};
+
+const mapaConf = {Ligacao:confLigacao,SpreadChat:confSpreadChat,Volumetria:confVolumetria,LeadTime:confLeadTime,Cadencia:confCadencia,geral:confgeral};
+const labelTipo = {Ligacao:'Ligação',SpreadChat:'Spread.Chat',Volumetria:'Volumetria',LeadTime:'Lead Time',Cadencia:'Cadência',geral:'Geral'};
+let tipoAtual = 'Ligacao';
+
+function confCell(nome, tipo){
+  const d = mapaConf[tipo]?.[nome];
+  if(d===null||d===undefined) return '<div class="conf-cell"><span class="conf-na">Sem dados</span></div>';
+  const ok = d.conf >= 90;
+  if(d.modo==='lig'){
+    const lbl = ok ? `${d.conf}% Conf.` : `${d.nao}% N-C`;
+    return `<div class="conf-cell"><span class="bola ${ok?'bola-ok':'bola-red'}"></span><span class="conf-pct ${ok?'conf-ok':'conf-red'}">${lbl}</span></div>`;
+  } else {
+    const lbl = `${d.conf}% Conf.`;
+    return `<div class="conf-cell"><span class="bola ${ok?'bola-ok':'bola-red'}"></span><span class="conf-pct ${ok?'conf-ok':'conf-red'}">${lbl}</span></div>`;
+  }
 }
-function planoCell(nome,tipo){
-  const d=mapaConf[tipo]?.[nome];
-  if(!d||d===null)return`<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
-  if(d.conf<90){const key=marcasData.find(m=>m.nome===nome)?.key||nome;return`<td class="sep plano-cell"><textarea class="plano-input" data-key="${key}" placeholder="Plano de ação..."></textarea></td>`;}
-  return`<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
+
+function planoCell(nome, tipo){
+  const d = mapaConf[tipo]?.[nome];
+  if(!d||d===null) return `<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
+  if(d.conf < 90){
+    const key = marcasData.find(m=>m.nome===nome)?.key||nome;
+    return `<td class="sep plano-cell"><textarea class="plano-input" data-key="${key}" placeholder="Plano de ação..."></textarea></td>`;
+  }
+  return `<td class="sep" style="color:var(--muted);font-size:9px;padding-left:8px;">—</td>`;
 }
+
 function renderMarcas(){
-  const tbody=document.getElementById('tbody-marcas');let t1=0,t7=0,t30=0;
-  tbody.innerHTML=marcasData.map(m=>{t1+=m.d1;t7+=m.d7;t30+=m.d30;
-    return`<tr><td class="tl">${m.nome}</td>
+  const tbody = document.getElementById('tbody-marcas');
+  let t1=0,t7=0,t30=0;
+  tbody.innerHTML = marcasData.map(m=>{
+    t1+=m.d1; t7+=m.d7; t30+=m.d30;
+    return `<tr>
+      <td class="tl">${m.nome}</td>
       <td>${m.d1>0?m.d1:'<span class="tz">—</span>'}</td>
       <td class="sep">${m.d7>0?m.d7:'<span class="tz">—</span>'}</td>
       <td class="sep tr">${m.d30}</td>
       <td class="sep">${confCell(m.nome,tipoAtual)}</td>
-      ${planoCell(m.nome,tipoAtual)}</tr>`;
+      ${planoCell(m.nome,tipoAtual)}
+    </tr>`;
   }).join('');
-  tbody.innerHTML+=`<tr class="tr-total"><td>Total</td><td class="tr">${t1||'—'}</td><td class="tr sep">${t7}</td><td class="tr sep">${t30}</td><td class="sep"></td><td class="sep"></td></tr>`;
+  tbody.innerHTML += `<tr class="tr-total"><td>Total</td><td class="tr">${t1||'—'}</td><td class="tr sep">${t7}</td><td class="tr sep">${t30}</td><td class="sep"></td><td class="sep"></td></tr>`;
   document.querySelectorAll('.plano-input').forEach(async el=>{
-    const k=el.dataset.key;el.value=await fbLoad(k,'');resize(el);
-    let tm;el.addEventListener('input',()=>{resize(el);clearTimeout(tm);tm=setTimeout(()=>{fbSave(k,el.value);atualizarContador();},600);});
+    const k=el.dataset.key; el.value=await fbLoad(k,''); resize(el);
+    let tm; el.addEventListener('input',()=>{resize(el);clearTimeout(tm);tm=setTimeout(()=>{fbSave(k,el.value);atualizarContador();},600);});
   });
   atualizarContador();
 }
-window.setTipo=function(tipo){
+
+window.setTipo = function(tipo){
   tipoAtual=tipo;
   document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tf-'+tipo)?.classList.add('active');
@@ -417,15 +527,18 @@ window.setTipo=function(tipo){
   renderMarcas();
 };
 
-/* ── UTILS ── */
+/* ===== UTILS ===== */
 function resize(el){el.style.height='auto';el.style.height=Math.max(22,el.scrollHeight)+'px';}
 function atualizarContador(){let n=0;document.querySelectorAll('.plano-input').forEach(el=>{if(el.value.trim())n++;});document.getElementById('contador-planos').textContent=n;}
-function atualizarContadores(){document.getElementById('contador-pos').textContent=Array.isArray(_c['positivos'])?_c['positivos'].length:0;document.getElementById('contador-neg').textContent=Array.isArray(_c['negativos'])?_c['negativos'].length:0;}
+function atualizarContadores(){
+  document.getElementById('contador-pos').textContent=Array.isArray(_c['positivos'])?_c['positivos'].length:0;
+  document.getElementById('contador-neg').textContent=Array.isArray(_c['negativos'])?_c['negativos'].length:0;
+}
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-/* ── COMPORTAMENTOS ── */
+/* ===== COMPORTAMENTOS ===== */
 function buildEntry(tipo,idx,data){
-  const div=document.createElement('div');div.className='behavior-entry';div.dataset.idx=idx;
+  const div=document.createElement('div'); div.className='behavior-entry'; div.dataset.idx=idx;
   const today=new Date().toISOString().split('T')[0];
   div.innerHTML=`<div class="behavior-meta">
     <input type="text" class="behavior-field" placeholder="Nome do colaborador..." value="${escHtml(data.nome)}" data-field="nome">
@@ -433,73 +546,81 @@ function buildEntry(tipo,idx,data){
     <button class="remove-btn" onclick="removeEntry('${tipo}',${idx})">✕ Remover</button>
   </div>
   <textarea class="behavior-desc" placeholder="Descreva o comportamento observado..." data-field="descricao">${escHtml(data.descricao)}</textarea>`;
-  let tm;div.querySelectorAll('[data-field]').forEach(el=>el.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>saveEntries(tipo),600);}));
+  let tm; div.querySelectorAll('[data-field]').forEach(el=>el.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>saveEntries(tipo),600);}));
   return div;
 }
+
 function renderEntries(tipo){
   const lista=document.getElementById('lista-'+tipo);
   const noRes=document.getElementById('no-'+(tipo==='positivos'?'pos':'neg'));
   const entries=_c[tipo]||[];
   const fN=(document.getElementById('f-'+(tipo==='positivos'?'pos':'neg')+'-nome')?.value||'').toLowerCase().trim();
   const fD=document.getElementById('f-'+(tipo==='positivos'?'pos':'neg')+'-data')?.value||'';
-  const filtered=entries.map((e,i)=>{return{...e,_idx:i};}).filter(e=>(!fN||(e.nome||'').toLowerCase().includes(fN))&&(!fD||(e.data||'')===fD));
+  const filtered=entries.map((e,i)=>({...e,_idx:i})).filter(e=>(!fN||(e.nome||'').toLowerCase().includes(fN))&&(!fD||(e.data||'')===fD));
   lista.innerHTML='';
   if(filtered.length===0&&entries.length>0){noRes.style.display='block';}
   else{noRes.style.display='none';filtered.forEach(e=>lista.appendChild(buildEntry(tipo,e._idx,e)));}
   if(entries.length===0)noRes.style.display='none';
 }
+
 async function addEntry(tipo){
-  const entries=[...(_c[tipo]||[])];entries.push({nome:'',descricao:'',data:new Date().toISOString().split('T')[0]});
-  _c[tipo]=entries;await fbSave(tipo,entries);renderEntries(tipo);atualizarContadores();
+  const entries=[...(_c[tipo]||[])];
+  entries.push({nome:'',descricao:'',data:new Date().toISOString().split('T')[0]});
+  _c[tipo]=entries; await fbSave(tipo,entries); renderEntries(tipo); atualizarContadores();
   const lista=document.getElementById('lista-'+tipo);
   setTimeout(()=>{lista.scrollTop=lista.scrollHeight;},50);
   setTimeout(()=>{const c=lista.querySelectorAll('.behavior-field');if(c.length)c[c.length-1].focus();},60);
 }
+
 async function removeEntry(tipo,idx){
-  const entries=[...(_c[tipo]||[])];entries.splice(idx,1);
-  _c[tipo]=entries;await fbSave(tipo,entries);renderEntries(tipo);atualizarContadores();
+  const entries=[...(_c[tipo]||[])]; entries.splice(idx,1);
+  _c[tipo]=entries; await fbSave(tipo,entries); renderEntries(tipo); atualizarContadores();
 }
+
 async function saveEntries(tipo){
-  const lista=document.getElementById('lista-'+tipo);const entries=[...(_c[tipo]||[])];
+  const lista=document.getElementById('lista-'+tipo); const entries=[...(_c[tipo]||[])];
   lista.querySelectorAll('.behavior-entry').forEach(div=>{
     const i=parseInt(div.dataset.idx);
     if(entries[i]){entries[i].nome=div.querySelector('[data-field="nome"]')?.value||'';entries[i].descricao=div.querySelector('[data-field="descricao"]')?.value||'';entries[i].data=div.querySelector('[data-field="data"]')?.value||'';}
   });
-  _c[tipo]=entries;await fbSave(tipo,entries);atualizarContadores();
+  _c[tipo]=entries; await fbSave(tipo,entries); atualizarContadores();
 }
+
 function listenFirebase(){
   ['positivos','negativos','obs-positivo','obs-negativo'].forEach(key=>{
     onSnapshot(doc(db,'dashboard',key),snap=>{
-      if(!snap.exists())return;const val=snap.data().value;_c[key]=val;
+      if(!snap.exists())return; const val=snap.data().value; _c[key]=val;
       if(key==='positivos'||key==='negativos'){renderEntries(key);atualizarContadores();}
       else{const el=document.getElementById(key);if(el&&document.activeElement!==el)el.value=val||'';}
     });
   });
   onSnapshot(collection(db,'dashboard'),snap=>{
     snap.docChanges().forEach(ch=>{
-      const k=ch.doc.id;if(!k.startsWith('pa-'))return;
-      const v=ch.doc.data().value||'';_c[k]=v;
+      const k=ch.doc.id; if(!k.startsWith('pa-'))return;
+      const v=ch.doc.data().value||''; _c[k]=v;
       const el=document.querySelector(`.plano-input[data-key="${k}"]`);
       if(el&&document.activeElement!==el){el.value=v;resize(el);}
-    });atualizarContador();
+    }); atualizarContador();
   });
 }
+
 async function init(){
   renderMarcas();
   for(const id of ['obs-positivo','obs-negativo']){
-    const el=document.getElementById(id);el.value=await fbLoad(id,'');
-    let tm;el.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>fbSave(id,el.value),600);});
+    const el=document.getElementById(id); el.value=await fbLoad(id,'');
+    let tm; el.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>fbSave(id,el.value),600);});
   }
-  _c['positivos']=await fbLoad('positivos',[]);if(!Array.isArray(_c['positivos']))_c['positivos']=[];
-  _c['negativos']=await fbLoad('negativos',[]);if(!Array.isArray(_c['negativos']))_c['negativos']=[];
-  renderEntries('positivos');renderEntries('negativos');atualizarContadores();
+  _c['positivos']=await fbLoad('positivos',[]); if(!Array.isArray(_c['positivos']))_c['positivos']=[];
+  _c['negativos']=await fbLoad('negativos',[]); if(!Array.isArray(_c['negativos']))_c['negativos']=[];
+  renderEntries('positivos'); renderEntries('negativos'); atualizarContadores();
   listenFirebase();
 }
-window.addEntry=addEntry;window.removeEntry=removeEntry;window.renderEntries=renderEntries;
+window.addEntry=addEntry; window.removeEntry=removeEntry; window.renderEntries=renderEntries;
 init();
+
 function ajustarAltura(){
   const cl=document.querySelector('.col-left'),w=document.getElementById('tbl-marcas-wrap'),h=document.querySelector('#card-marcas .card-header');
-  if(!cl||!w||!h)return;w.style.height=Math.max(120,cl.getBoundingClientRect().height-h.getBoundingClientRect().height)+'px';
+  if(!cl||!w||!h)return; w.style.height=Math.max(120,cl.getBoundingClientRect().height-h.getBoundingClientRect().height)+'px';
 }
 window.addEventListener('load',()=>setTimeout(ajustarAltura,150));
 window.addEventListener('resize',ajustarAltura);
