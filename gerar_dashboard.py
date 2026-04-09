@@ -135,6 +135,12 @@ def gerar():
     # ── 5. Conformidade por tipo ─────────────────
     # Ligação  → col F (Checklist da Qualificação): % conf, % nao, % cor
     # Especiais → col E (Checklist de Processo): pontos = 100-qtd_NC, % NC, % Cor
+    # Ligação → col F, % reais
+    # Spread.Chat → col E, % reais
+    # Volumetria, Lead Time, Cadência → col E, 100 - 1pp por NC/Cor
+    tipos_pct = {'Ligação', 'Spread.Chat'}  # % reais, somam 100%
+    tipos_pp  = {'Volumetria', 'Lead Time', 'Cadência'}  # pontos percentuais
+
     def calc_conf_tipo(r, t):
         if t == 'Ligação':
             gv = r[(r[col_tipo]==t) & r[col_F].notna()]
@@ -143,19 +149,25 @@ def gerar():
             conf = round(len(gv[gv[col_F]=='Conforme'])/tot*100, 1)
             nao  = round(len(gv[gv[col_F]=='Não Conforme'])/tot*100, 1)
             cor  = round(len(gv[gv[col_F]=='Corrigido'])/tot*100, 1)
-            return {'tot':tot, 'conf':conf, 'nao':nao, 'cor':cor, 'modo':'lig'}
-        else:
-            # col E — % reais (conf+nao+cor = 100%)
+            return {'tot':tot, 'conf':conf, 'nao':nao, 'cor':cor, 'modo':'pct'}
+        elif t == 'Spread.Chat':
+            # col E, % reais
             gv = r[(r[col_tipo]==t) & r[col_E].notna()]
             tot = len(gv)
             if tot == 0: return None
-            conf_n = len(gv[gv[col_E]=='Conforme'])
-            nao_n  = len(gv[gv[col_E]=='Não Conforme'])
-            cor_n  = len(gv[gv[col_E]=='Corrigido'])
-            conf_p = round(conf_n/tot*100, 1)
-            nao_p  = round(nao_n/tot*100, 1)
-            cor_p  = round(cor_n/tot*100, 1)
-            return {'tot':tot, 'conf':conf_p, 'nao':nao_p, 'cor':cor_p, 'modo':'esp'}
+            conf = round(len(gv[gv[col_E]=='Conforme'])/tot*100, 1)
+            nao  = round(len(gv[gv[col_E]=='Não Conforme'])/tot*100, 1)
+            cor  = round(len(gv[gv[col_E]=='Corrigido'])/tot*100, 1)
+            return {'tot':tot, 'conf':conf, 'nao':nao, 'cor':cor, 'modo':'pct'}
+        else:
+            # col E, 100 - 1pp por NC, 1pp por Corrigido
+            gv = r[(r[col_tipo]==t) & r[col_E].notna()]
+            tot = len(gv)
+            if tot == 0: return None
+            nc  = len(gv[gv[col_E]=='Não Conforme'])
+            cor = len(gv[gv[col_E]=='Corrigido'])
+            conf_pp = max(0, 100 - nc - cor)
+            return {'tot':tot, 'conf':conf_pp, 'nao':nc, 'cor':cor, 'modo':'pp'}
 
     def conf_tipo_js(r):
         rows = []
@@ -250,8 +262,14 @@ def gerar():
     df2[col_media] = pd.to_numeric(df2[col_media], errors='coerce')
     df2 = df2.dropna(subset=[col_media, col_dia])
 
-    dr7  = df2[df2[col_dia].dt.date >= d7_inicio]
-    dr30 = df2[df2[col_dia].dt.date >= d30_inicio]
+    # Usar data máxima da própria aba Dados como referência (pode ser diferente de Auditorias)
+    hoje_dados  = df2[col_dia].dt.date.max()
+    d7_dados    = d_util_atras(hoje_dados, 7)
+    d30_dados   = d_util_atras(hoje_dados, 30)
+    print(f'Dados: última data={hoje_dados} | D7 desde={d7_dados} | D30 desde={d30_dados}')
+
+    dr7  = df2[df2[col_dia].dt.date >= d7_dados]
+    dr30 = df2[df2[col_dia].dt.date >= d30_dados]
     dirs = sorted(df2[col_dir].dropna().unique())
     meta = int(df2[col_meta].iloc[0]) if col_meta else 200
 
@@ -261,6 +279,7 @@ def gerar():
         m30 = dr30[dr30[col_dir]==d][col_media].mean()
         v7  = round(float(m7), 1) if not pd.isna(m7) else 'null'
         v30 = round(float(m30), 1) if not pd.isna(m30) else 'null'
+        print(f'  {d}: D7={v7} D30={v30}')
         dir_js += f'  "{d}":{{d7:{v7},d30:{v30}}},\n'
     dir_js += '};'
 
@@ -550,8 +569,7 @@ let tipoAtual='Ligacao', metaAtual={meta};
 function renderConf(p){{
   ['d1','d7','d30'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===p));
   document.getElementById('tbody-conf').innerHTML = confTipoPeriodos[p].map(r=>{{
-    if(r.tot===0) return `<tr><td class="tl">${{r.tipo}}</td><td class="tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td></tr>`;
-    /* conf+nao+cor = 100% sempre */
+    if(r.tot===0||r.conf===null) return `<tr><td class="tl">${{r.tipo}}</td><td class="tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td><td class="sep tz">—</td></tr>`;
     const cs=`<span class="${{r.conf>=90?'c-g':r.conf>=70?'c-a':'c-r'}}">${{String(r.conf).replace('.',',')}}%</span>`;
     const ns=r.nao>0?`<span class="c-r">${{String(r.nao).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
     const cors=r.cor>0?`<span class="c-a">${{String(r.cor).replace('.',',')}}%</span>`:'<span class="tz">—</span>';
