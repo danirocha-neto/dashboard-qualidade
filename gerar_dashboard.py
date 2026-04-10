@@ -129,8 +129,8 @@ def gerar():
         tot1+=c1; tot7+=c7; tot30+=c30
         s1  = f'<span class="tr">{c1}</span>' if c1 else '<span class="tz">—</span>'
         s7  = f'<span class="tr">{c7}</span>' if c7 else '<span class="tz">—</span>'
-        linhas_tipo += f'<tr><td class="tl">{t}</td><td>{s1}</td><td class="sep">{s7}</td><td class="sep tr">{c30}</td></tr>\n'
-    linhas_tipo += f'<tr class="tr-total"><td>Total</td><td class="tr">{tot1 or "—"}</td><td class="tr sep">{tot7}</td><td class="tr sep">{tot30}</td></tr>'
+        linhas_tipo += f'<tr><td class="tl">{t}</td><td class="sep" style="text-align:right">{s1}</td><td class="tr sep">{s7}</td><td class="tr sep">{c30}</td></tr>\n'
+    linhas_tipo += f'<tr class="tr-total"><td>Total</td><td class="tr sep">{tot1 or "—"}</td><td class="tr sep">{tot7}</td><td class="tr sep">{tot30}</td></tr>'
 
     # ── 5. Conformidade por tipo ─────────────────
     # Ligação  → col F (Checklist da Qualificação): % conf, % nao, % cor
@@ -418,7 +418,7 @@ footer{{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}}
   <div class="card">
     <div class="card-header"><div class="dot d-blue"></div><div class="card-title">Quantidade por Tipo de Auditoria</div></div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Tipo</th><th class="r">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th></tr></thead>
+      <thead><tr><th>Tipo</th><th class="r sep">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th></tr></thead>
       <tbody>{linhas_tipo}</tbody>
     </table></div>
   </div>
