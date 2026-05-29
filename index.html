@@ -110,18 +110,18 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 <header>
   <div>
     <h1>Dashboard de Qualidade</h1>
-    <div class="sub">Referência: <strong>28/05/2026</strong> &nbsp;·&nbsp; D-1 = 28/05 &nbsp;·&nbsp; D-7 desde 19/05 &nbsp;·&nbsp; D-30 desde 16/04 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
+    <div class="sub">Referência: <strong>29/05/2026</strong> &nbsp;·&nbsp; D-1 = 29/05 &nbsp;·&nbsp; D-7 desde 20/05 &nbsp;·&nbsp; D-30 desde 17/04 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
   </div>
-  <div class="badge">📊 1280 auditorias · 28/05/2026</div>
+  <div class="badge">📊 1294 auditorias · 29/05/2026</div>
 </header>
 
 <div class="section-quantitativa">
 <div class="section-label">Dados Quantitativos</div>
 <div class="metrics-row">
-  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">2</div><div class="metric-sub">28/05</div></div>
-  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">23</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
-  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">314</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
-  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">1280</div><div class="metric-sub">Aba Auditorias</div></div>
+  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">4</div><div class="metric-sub">29/05</div></div>
+  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">37</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
+  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">301</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
+  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">1294</div><div class="metric-sub">Aba Auditorias</div></div>
   <div class="metric"><div class="metric-label">Planos de Ação</div><div class="metric-value" id="contador-planos">0</div><div class="metric-sub">preenchidos</div></div>
   <div class="metric m-pos"><div class="metric-label">Comportamentos +</div><div class="metric-value" id="contador-pos">0</div><div class="metric-sub">positivos</div></div>
   <div class="metric m-neg"><div class="metric-label">Comportamentos −</div><div class="metric-value" id="contador-neg">0</div><div class="metric-sub">negativos</div></div>
@@ -135,10 +135,10 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
       <thead><tr><th>Tipo</th><th class="r sep">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th></tr></thead>
       <tbody><tr><td class="tl">Cadência</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
 <tr><td class="tl">Lead Time</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">9</td></tr>
-<tr><td class="tl">Ligação</td><td class="sep" style="text-align:right"><span class="tr">2</span></td><td class="tr sep"><span class="tr">23</span></td><td class="tr sep">297</td></tr>
+<tr><td class="tl">Ligação</td><td class="sep" style="text-align:right"><span class="tr">4</span></td><td class="tr sep"><span class="tr">37</span></td><td class="tr sep">284</td></tr>
 <tr><td class="tl">Spread.Chat</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
 <tr><td class="tl">Volumetria</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">8</td></tr>
-<tr class="tr-total"><td>Total</td><td class="tr sep">2</td><td class="tr sep">23</td><td class="tr sep">314</td></tr></tbody>
+<tr class="tr-total"><td>Total</td><td class="tr sep">4</td><td class="tr sep">37</td><td class="tr sep">301</td></tr></tbody>
     </table></div>
   </div>
 
@@ -253,7 +253,7 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 </div>
 </div>
 
-<footer>Gerado automaticamente em 28/05/2026 · Dashboard de Qualidade · 1280 auditorias · fins de semana ignorados</footer>
+<footer>Gerado automaticamente em 29/05/2026 · Dashboard de Qualidade · 1294 auditorias · fins de semana ignorados</footer>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -280,50 +280,49 @@ async function fbLoad(k,def=''){
 const confTipoPeriodos = {
   d1: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:1,conf:0.0,nao:0.0,cor:100.0,modo:"pct"},
+    {tipo:"Ligação",tot:4,conf:75.0,nao:25.0,cor:0.0,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d7: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:22,conf:77.3,nao:18.2,cor:4.5,modo:"pct"},
+    {tipo:"Ligação",tot:37,conf:81.1,nao:16.2,cor:2.7,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d30: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:9,conf:91,nao:9,cor:0,modo:"pp"},
-    {tipo:"Ligação",tot:296,conf:89.5,nao:7.4,cor:3.0,modo:"pct"},
+    {tipo:"Ligação",tot:284,conf:88.4,nao:8.5,cor:3.2,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:8,conf:92,nao:8,cor:0,modo:"pp"}]
 };
 
-const confLigacao    = {"Ecoville":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Asia Source":{conf:67.6,nao:23.5,cor:8.8,modo:"lig"},"Locar X":{conf:93.1,nao:0.0,cor:6.9,modo:"lig"},"Fast Tennis":{conf:91.7,nao:8.3,cor:0.0,modo:"lig"},"Shelf":{conf:75.0,nao:20.0,cor:5.0,modo:"lig"},"Brumed":{conf:95.8,nao:4.2,cor:0.0,modo:"lig"},"Maria Lavadeira":{conf:90.0,nao:5.0,cor:5.0,modo:"lig"},"Airlocker":{conf:88.2,nao:11.8,cor:0.0,modo:"lig"},"Doctor Fit":{conf:87.5,nao:0.0,cor:12.5,modo:"lig"},"La Bolaria":{conf:90.9,nao:9.1,cor:0.0,modo:"lig"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"lig"},"Mestre das Tintas":{conf:87.5,nao:12.5,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre da Obra":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Hermanito":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Suav":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
-const confSpreadChat = {"Ecoville":null,"Asia Source":null,"Locar X":null,"Fast Tennis":null,"Shelf":null,"Brumed":null,"Maria Lavadeira":null,"Airlocker":null,"Doctor Fit":null,"La Bolaria":null,"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Saúde Livre":null,"Hermanito":null,"Sua Hora Unha":null,"Lypedepil":null,"Suav":null,"Açailand":null};
-const confVolumetria = {"Ecoville":null,"Asia Source":null,"Locar X":null,"Fast Tennis":null,"Shelf":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Brumed":null,"Maria Lavadeira":null,"Airlocker":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Doctor Fit":null,"La Bolaria":{conf:96,nao:100.0,cor:0.0,modo:"esp"},"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Saúde Livre":null,"Hermanito":null,"Sua Hora Unha":null,"Lypedepil":null,"Suav":null,"Açailand":null};
-const confLeadTime   = {"Ecoville":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":null,"Locar X":null,"Fast Tennis":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Shelf":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Brumed":null,"Maria Lavadeira":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Airlocker":null,"Doctor Fit":null,"La Bolaria":null,"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Calzoon":null,"Saúde Livre":null,"Hermanito":null,"Sua Hora Unha":null,"Lypedepil":null,"Suav":null,"Açailand":null};
-const confCadencia   = {"Ecoville":null,"Asia Source":null,"Locar X":null,"Fast Tennis":null,"Shelf":null,"Brumed":null,"Maria Lavadeira":null,"Airlocker":null,"Doctor Fit":null,"La Bolaria":null,"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Saúde Livre":null,"Hermanito":null,"Sua Hora Unha":null,"Lypedepil":null,"Suav":null,"Açailand":null};
-const confgeral      = {"Ecoville":{conf:94.3,nao:5.7,cor:0.0,modo:"geral"},"Asia Source":{conf:67.6,nao:23.5,cor:8.8,modo:"geral"},"Locar X":{conf:93.1,nao:0.0,cor:6.9,modo:"geral"},"Fast Tennis":{conf:84.6,nao:15.4,cor:0.0,modo:"geral"},"Shelf":{conf:60.0,nao:36.0,cor:4.0,modo:"geral"},"Brumed":{conf:95.8,nao:4.2,cor:0.0,modo:"geral"},"Maria Lavadeira":{conf:85.7,nao:9.5,cor:4.8,modo:"geral"},"Airlocker":{conf:83.3,nao:16.7,cor:0.0,modo:"geral"},"Doctor Fit":{conf:87.5,nao:0.0,cor:12.5,modo:"geral"},"La Bolaria":{conf:66.7,nao:33.3,cor:0.0,modo:"geral"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"geral"},"Mestre das Tintas":{conf:87.5,nao:12.5,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Mestre da Obra":{conf:83.3,nao:16.7,cor:0.0,modo:"geral"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Hermanito":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Suav":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
+const confLigacao    = {"Ecoville":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Asia Source":{conf:66.7,nao:24.2,cor:9.1,modo:"lig"},"Brumed":{conf:96.2,nao:3.8,cor:0.0,modo:"lig"},"Shelf":{conf:75.0,nao:20.0,cor:5.0,modo:"lig"},"Locar X":{conf:91.7,nao:0.0,cor:8.3,modo:"lig"},"Fast Tennis":{conf:90.9,nao:9.1,cor:0.0,modo:"lig"},"Doctor Fit":{conf:81.0,nao:9.5,cor:9.5,modo:"lig"},"Maria Lavadeira":{conf:89.5,nao:5.3,cor:5.3,modo:"lig"},"Airlocker":{conf:88.2,nao:11.8,cor:0.0,modo:"lig"},"La Bolaria":{conf:88.9,nao:11.1,cor:0.0,modo:"lig"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"lig"},"Mestre das Tintas":{conf:88.9,nao:11.1,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre da Obra":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Suav":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
+const confSpreadChat = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":null,"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"La Bolaria":null,"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Saúde Livre":null,"Açailand":null,"Sua Hora Unha":null,"Suav":null};
+const confVolumetria = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"La Bolaria":{conf:96,nao:100.0,cor:0.0,modo:"esp"},"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Saúde Livre":null,"Açailand":null,"Sua Hora Unha":null,"Suav":null};
+const confLeadTime   = {"Ecoville":{conf:97,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":null,"Brumed":null,"Shelf":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Locar X":null,"Fast Tennis":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Doctor Fit":null,"Maria Lavadeira":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Airlocker":null,"La Bolaria":null,"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Calzoon":null,"Lypedepil":null,"Saúde Livre":null,"Açailand":null,"Sua Hora Unha":null,"Suav":null};
+const confCadencia   = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":null,"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"La Bolaria":null,"4 Beach":null,"Mestre das Tintas":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Saúde Livre":null,"Açailand":null,"Sua Hora Unha":null,"Suav":null};
+const confgeral      = {"Ecoville":{conf:94.2,nao:5.8,cor:0.0,modo:"geral"},"Asia Source":{conf:66.7,nao:24.2,cor:9.1,modo:"geral"},"Brumed":{conf:96.2,nao:3.8,cor:0.0,modo:"geral"},"Shelf":{conf:60.0,nao:36.0,cor:4.0,modo:"geral"},"Locar X":{conf:91.7,nao:0.0,cor:8.3,modo:"geral"},"Fast Tennis":{conf:83.3,nao:16.7,cor:0.0,modo:"geral"},"Doctor Fit":{conf:81.0,nao:9.5,cor:9.5,modo:"geral"},"Maria Lavadeira":{conf:85.0,nao:10.0,cor:5.0,modo:"geral"},"Airlocker":{conf:83.3,nao:16.7,cor:0.0,modo:"geral"},"La Bolaria":{conf:61.5,nao:38.5,cor:0.0,modo:"geral"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"geral"},"Mestre das Tintas":{conf:88.9,nao:11.1,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Mestre da Obra":{conf:80.0,nao:20.0,cor:0.0,modo:"geral"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Suav":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
 
 const marcasData = [
-  {nome:"Ecoville",d1:0,d7:1,d30:53,key:"pa-Ecoville"},
-  {nome:"Asia Source",d1:0,d7:3,d30:34,key:"pa-AsiaSource"},
-  {nome:"Locar X",d1:0,d7:0,d30:29,key:"pa-LocarX"},
-  {nome:"Fast Tennis",d1:0,d7:2,d30:26,key:"pa-FastTennis"},
-  {nome:"Shelf",d1:1,d7:1,d30:25,key:"pa-Shelf"},
-  {nome:"Brumed",d1:0,d7:9,d30:24,key:"pa-Brumed"},
-  {nome:"Maria Lavadeira",d1:0,d7:0,d30:21,key:"pa-MariaLavadeira"},
-  {nome:"Airlocker",d1:0,d7:2,d30:18,key:"pa-Airlocker"},
-  {nome:"Doctor Fit",d1:0,d7:3,d30:16,key:"pa-DoctorFit"},
-  {nome:"La Bolaria",d1:0,d7:1,d30:15,key:"pa-LaBolaria"},
+  {nome:"Ecoville",d1:0,d7:1,d30:52,key:"pa-Ecoville"},
+  {nome:"Asia Source",d1:0,d7:3,d30:33,key:"pa-AsiaSource"},
+  {nome:"Brumed",d1:0,d7:11,d30:26,key:"pa-Brumed"},
+  {nome:"Shelf",d1:0,d7:1,d30:25,key:"pa-Shelf"},
+  {nome:"Locar X",d1:0,d7:1,d30:24,key:"pa-LocarX"},
+  {nome:"Fast Tennis",d1:0,d7:2,d30:24,key:"pa-FastTennis"},
+  {nome:"Doctor Fit",d1:3,d7:8,d30:21,key:"pa-DoctorFit"},
+  {nome:"Maria Lavadeira",d1:0,d7:2,d30:20,key:"pa-MariaLavadeira"},
+  {nome:"Airlocker",d1:0,d7:4,d30:18,key:"pa-Airlocker"},
+  {nome:"La Bolaria",d1:0,d7:1,d30:13,key:"pa-LaBolaria"},
   {nome:"4 Beach",d1:0,d7:0,d30:11,key:"pa-4Beach"},
-  {nome:"Mestre das Tintas",d1:0,d7:0,d30:8,key:"pa-MestredasTintas"},
+  {nome:"Mestre das Tintas",d1:1,d7:1,d30:9,key:"pa-MestredasTintas"},
   {nome:"Atend Já",d1:0,d7:0,d30:7,key:"pa-AtendJ"},
-  {nome:"Mestre da Obra",d1:0,d7:0,d30:6,key:"pa-MestredaObra"},
-  {nome:"Calzoon",d1:0,d7:0,d30:5,key:"pa-Calzoon"},
-  {nome:"Saúde Livre",d1:0,d7:0,d30:4,key:"pa-SadeLivre"},
-  {nome:"Hermanito",d1:0,d7:0,d30:3,key:"pa-Hermanito"},
-  {nome:"Sua Hora Unha",d1:0,d7:0,d30:3,key:"pa-SuaHoraUnha"},
-  {nome:"Lypedepil",d1:0,d7:0,d30:2,key:"pa-Lypedepil"},
-  {nome:"Suav",d1:0,d7:0,d30:2,key:"pa-Suav"},
+  {nome:"Mestre da Obra",d1:0,d7:0,d30:5,key:"pa-MestredaObra"},
+  {nome:"Calzoon",d1:0,d7:1,d30:4,key:"pa-Calzoon"},
+  {nome:"Lypedepil",d1:0,d7:1,d30:3,key:"pa-Lypedepil"},
+  {nome:"Saúde Livre",d1:0,d7:0,d30:3,key:"pa-SadeLivre"},
   {nome:"Açailand",d1:0,d7:0,d30:1,key:"pa-Aailand"},
+  {nome:"Sua Hora Unha",d1:0,d7:0,d30:1,key:"pa-SuaHoraUnha"},
+  {nome:"Suav",d1:0,d7:0,d30:1,key:"pa-Suav"},
 ];
 const dirData = {
   "Camaleões":{d7:119.8,d30:119.3},
