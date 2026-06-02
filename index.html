@@ -280,27 +280,27 @@ async function fbLoad(k,def=''){
 const confTipoPeriodos = {
   d1: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:5,conf:100.0,nao:0.0,cor:0.0,modo:"pct"},
+    {tipo:"Ligação",tot:6,conf:100.0,nao:0.0,cor:0.0,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d7: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:44,conf:84.1,nao:13.6,cor:2.3,modo:"pct"},
+    {tipo:"Ligação",tot:45,conf:84.4,nao:13.3,cor:2.2,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d30: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:6,conf:94,nao:6,cor:0,modo:"pp"},
-    {tipo:"Ligação",tot:275,conf:88.7,nao:8.4,cor:2.9,modo:"pct"},
+    {tipo:"Ligação",tot:276,conf:88.8,nao:8.3,cor:2.9,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:4,conf:96,nao:4,cor:0,modo:"pp"}]
 };
 
-const confLigacao    = {"Ecoville":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Asia Source":{conf:65.6,nao:25.0,cor:9.4,modo:"lig"},"Brumed":{conf:96.2,nao:3.8,cor:0.0,modo:"lig"},"Shelf":{conf:75.0,nao:20.0,cor:5.0,modo:"lig"},"Locar X":{conf:91.3,nao:0.0,cor:8.7,modo:"lig"},"Fast Tennis":{conf:90.5,nao:9.5,cor:0.0,modo:"lig"},"Doctor Fit":{conf:85.0,nao:10.0,cor:5.0,modo:"lig"},"Maria Lavadeira":{conf:89.5,nao:5.3,cor:5.3,modo:"lig"},"Airlocker":{conf:88.2,nao:11.8,cor:0.0,modo:"lig"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"lig"},"Mestre das Tintas":{conf:90.0,nao:10.0,cor:0.0,modo:"lig"},"La Bolaria":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre da Obra":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
-const confSpreadChat = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":null,"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"4 Beach":null,"Mestre das Tintas":null,"La Bolaria":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
-const confVolumetria = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"4 Beach":null,"Mestre das Tintas":null,"La Bolaria":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
-const confLeadTime   = {"Ecoville":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":null,"Brumed":null,"Shelf":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Locar X":null,"Fast Tennis":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Doctor Fit":null,"Maria Lavadeira":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Airlocker":null,"4 Beach":null,"Mestre das Tintas":null,"La Bolaria":null,"Atend Já":null,"Mestre da Obra":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
-const confCadencia   = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":null,"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"4 Beach":null,"Mestre das Tintas":null,"La Bolaria":null,"Atend Já":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
-const confgeral      = {"Ecoville":{conf:97.9,nao:2.1,cor:0.0,modo:"geral"},"Asia Source":{conf:65.6,nao:25.0,cor:9.4,modo:"geral"},"Brumed":{conf:96.2,nao:3.8,cor:0.0,modo:"geral"},"Shelf":{conf:62.5,nao:33.3,cor:4.2,modo:"geral"},"Locar X":{conf:91.3,nao:0.0,cor:8.7,modo:"geral"},"Fast Tennis":{conf:86.4,nao:13.6,cor:0.0,modo:"geral"},"Doctor Fit":{conf:85.0,nao:10.0,cor:5.0,modo:"geral"},"Maria Lavadeira":{conf:85.0,nao:10.0,cor:5.0,modo:"geral"},"Airlocker":{conf:88.2,nao:11.8,cor:0.0,modo:"geral"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"geral"},"Mestre das Tintas":{conf:90.0,nao:10.0,cor:0.0,modo:"geral"},"La Bolaria":{conf:77.8,nao:22.2,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Mestre da Obra":{conf:80.0,nao:20.0,cor:0.0,modo:"geral"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
+const confLigacao    = {"Ecoville":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Asia Source":{conf:65.6,nao:25.0,cor:9.4,modo:"lig"},"Brumed":{conf:96.2,nao:3.8,cor:0.0,modo:"lig"},"Shelf":{conf:75.0,nao:20.0,cor:5.0,modo:"lig"},"Locar X":{conf:91.3,nao:0.0,cor:8.7,modo:"lig"},"Fast Tennis":{conf:90.5,nao:9.5,cor:0.0,modo:"lig"},"Doctor Fit":{conf:85.0,nao:10.0,cor:5.0,modo:"lig"},"Maria Lavadeira":{conf:89.5,nao:5.3,cor:5.3,modo:"lig"},"Airlocker":{conf:88.2,nao:11.8,cor:0.0,modo:"lig"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre das Tintas":{conf:90.0,nao:10.0,cor:0.0,modo:"lig"},"La Bolaria":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre da Obra":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
+const confSpreadChat = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":null,"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"4 Beach":null,"Atend Já":null,"Mestre das Tintas":null,"La Bolaria":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
+const confVolumetria = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"4 Beach":null,"Atend Já":null,"Mestre das Tintas":null,"La Bolaria":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
+const confLeadTime   = {"Ecoville":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":null,"Brumed":null,"Shelf":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Locar X":null,"Fast Tennis":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Doctor Fit":null,"Maria Lavadeira":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Airlocker":null,"4 Beach":null,"Atend Já":null,"Mestre das Tintas":null,"La Bolaria":null,"Mestre da Obra":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
+const confCadencia   = {"Ecoville":null,"Asia Source":null,"Brumed":null,"Shelf":null,"Locar X":null,"Fast Tennis":null,"Doctor Fit":null,"Maria Lavadeira":null,"Airlocker":null,"4 Beach":null,"Atend Já":null,"Mestre das Tintas":null,"La Bolaria":null,"Mestre da Obra":null,"Calzoon":null,"Lypedepil":null,"Açailand":null,"Sua Hora Unha":null};
+const confgeral      = {"Ecoville":{conf:97.9,nao:2.1,cor:0.0,modo:"geral"},"Asia Source":{conf:65.6,nao:25.0,cor:9.4,modo:"geral"},"Brumed":{conf:96.2,nao:3.8,cor:0.0,modo:"geral"},"Shelf":{conf:62.5,nao:33.3,cor:4.2,modo:"geral"},"Locar X":{conf:91.3,nao:0.0,cor:8.7,modo:"geral"},"Fast Tennis":{conf:86.4,nao:13.6,cor:0.0,modo:"geral"},"Doctor Fit":{conf:85.0,nao:10.0,cor:5.0,modo:"geral"},"Maria Lavadeira":{conf:85.0,nao:10.0,cor:5.0,modo:"geral"},"Airlocker":{conf:88.2,nao:11.8,cor:0.0,modo:"geral"},"4 Beach":{conf:81.8,nao:18.2,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Mestre das Tintas":{conf:90.0,nao:10.0,cor:0.0,modo:"geral"},"La Bolaria":{conf:77.8,nao:22.2,cor:0.0,modo:"geral"},"Mestre da Obra":{conf:80.0,nao:20.0,cor:0.0,modo:"geral"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Sua Hora Unha":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
 
 const marcasData = [
   {nome:"Ecoville",d1:0,d7:1,d30:48,key:"pa-Ecoville"},
@@ -312,10 +312,10 @@ const marcasData = [
   {nome:"Doctor Fit",d1:0,d7:8,d30:20,key:"pa-DoctorFit"},
   {nome:"Maria Lavadeira",d1:0,d7:2,d30:20,key:"pa-MariaLavadeira"},
   {nome:"Airlocker",d1:1,d7:5,d30:17,key:"pa-Airlocker"},
-  {nome:"4 Beach",d1:0,d7:0,d30:11,key:"pa-4Beach"},
+  {nome:"4 Beach",d1:1,d7:1,d30:12,key:"pa-4Beach"},
+  {nome:"Atend Já",d1:2,d7:3,d30:10,key:"pa-AtendJ"},
   {nome:"Mestre das Tintas",d1:0,d7:2,d30:10,key:"pa-MestredasTintas"},
   {nome:"La Bolaria",d1:0,d7:1,d30:9,key:"pa-LaBolaria"},
-  {nome:"Atend Já",d1:1,d7:2,d30:9,key:"pa-AtendJ"},
   {nome:"Mestre da Obra",d1:0,d7:0,d30:5,key:"pa-MestredaObra"},
   {nome:"Calzoon",d1:0,d7:1,d30:4,key:"pa-Calzoon"},
   {nome:"Lypedepil",d1:0,d7:1,d30:3,key:"pa-Lypedepil"},
