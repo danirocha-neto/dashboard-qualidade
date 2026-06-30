@@ -110,18 +110,18 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 <header>
   <div>
     <h1>Dashboard de Qualidade</h1>
-    <div class="sub">Referência: <strong>29/06/2026</strong> &nbsp;·&nbsp; D-1 = 29/06 &nbsp;·&nbsp; D-7 desde 18/06 &nbsp;·&nbsp; D-30 desde 18/05 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
+    <div class="sub">Referência: <strong>30/06/2026</strong> &nbsp;·&nbsp; D-1 = 30/06 &nbsp;·&nbsp; D-7 desde 19/06 &nbsp;·&nbsp; D-30 desde 19/05 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
   </div>
-  <div class="badge">📊 1376 auditorias · 29/06/2026</div>
+  <div class="badge">📊 1383 auditorias · 30/06/2026</div>
 </header>
 
 <div class="section-quantitativa">
 <div class="section-label">Dados Quantitativos</div>
 <div class="metrics-row">
-  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">8</div><div class="metric-sub">29/06</div></div>
-  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">44</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
-  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">119</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
-  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">1376</div><div class="metric-sub">Aba Auditorias</div></div>
+  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">8</div><div class="metric-sub">30/06</div></div>
+  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">51</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
+  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">126</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
+  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">1383</div><div class="metric-sub">Aba Auditorias</div></div>
   <div class="metric"><div class="metric-label">Planos de Ação</div><div class="metric-value" id="contador-planos">0</div><div class="metric-sub">preenchidos</div></div>
   <div class="metric m-pos"><div class="metric-label">Comportamentos +</div><div class="metric-value" id="contador-pos">0</div><div class="metric-sub">positivos</div></div>
   <div class="metric m-neg"><div class="metric-label">Comportamentos −</div><div class="metric-value" id="contador-neg">0</div><div class="metric-sub">negativos</div></div>
@@ -135,10 +135,10 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
       <thead><tr><th>Tipo</th><th class="r sep">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th></tr></thead>
       <tbody><tr><td class="tl">Cadência</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tr">1</span></td><td class="tr sep">1</td></tr>
 <tr><td class="tl">Lead Time</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tr">3</span></td><td class="tr sep">4</td></tr>
-<tr><td class="tl">Ligação</td><td class="sep" style="text-align:right"><span class="tr">8</span></td><td class="tr sep"><span class="tr">40</span></td><td class="tr sep">114</td></tr>
+<tr><td class="tl">Ligação</td><td class="sep" style="text-align:right"><span class="tr">8</span></td><td class="tr sep"><span class="tr">47</span></td><td class="tr sep">121</td></tr>
 <tr><td class="tl">Spread.Chat</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
 <tr><td class="tl">Volumetria</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
-<tr class="tr-total"><td>Total</td><td class="tr sep">8</td><td class="tr sep">44</td><td class="tr sep">119</td></tr></tbody>
+<tr class="tr-total"><td>Total</td><td class="tr sep">8</td><td class="tr sep">51</td><td class="tr sep">126</td></tr></tbody>
     </table></div>
   </div>
 
@@ -253,7 +253,7 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 </div>
 </div>
 
-<footer>Gerado automaticamente em 29/06/2026 · Dashboard de Qualidade · 1376 auditorias · fins de semana ignorados</footer>
+<footer>Gerado automaticamente em 30/06/2026 · Dashboard de Qualidade · 1383 auditorias · fins de semana ignorados</footer>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -280,49 +280,49 @@ async function fbLoad(k,def=''){
 const confTipoPeriodos = {
   d1: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:5,conf:80.0,nao:20.0,cor:0.0,modo:"pct"},
+    {tipo:"Ligação",tot:3,conf:33.3,nao:66.7,cor:0.0,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d7: [{tipo:"Cadência",tot:1,conf:99,nao:1,cor:0,modo:"pp"},
     {tipo:"Lead Time",tot:3,conf:97,nao:3,cor:0,modo:"pp"},
-    {tipo:"Ligação",tot:37,conf:86.5,nao:13.5,cor:0.0,modo:"pct"},
+    {tipo:"Ligação",tot:42,conf:83.3,nao:16.7,cor:0.0,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d30: [{tipo:"Cadência",tot:1,conf:99,nao:1,cor:0,modo:"pp"},
     {tipo:"Lead Time",tot:4,conf:96,nao:4,cor:0,modo:"pp"},
-    {tipo:"Ligação",tot:111,conf:82.0,nao:17.1,cor:0.9,modo:"pct"},
+    {tipo:"Ligação",tot:116,conf:81.0,nao:18.1,cor:0.9,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}]
 };
 
-const confLigacao    = {"Brumed":{conf:69.6,nao:30.4,cor:0.0,modo:"lig"},"Fast Tennis":{conf:77.8,nao:22.2,cor:0.0,modo:"lig"},"Asia Source":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Doctor Fit":{conf:63.6,nao:36.4,cor:0.0,modo:"lig"},"Ecoville":{conf:77.8,nao:22.2,cor:0.0,modo:"lig"},"Airlocker":{conf:71.4,nao:28.6,cor:0.0,modo:"lig"},"Shelf":{conf:83.3,nao:0.0,cor:16.7,modo:"lig"},"4 Beach":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Maria Lavadeira":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Locar X":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"La Bolaria":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre das Tintas":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
-const confSpreadChat = {"Brumed":null,"Fast Tennis":null,"Asia Source":null,"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":null,"Atend Já":null,"Maria Lavadeira":null,"Calzoon":null,"Locar X":null,"La Bolaria":null,"Mestre das Tintas":null,"Lypedepil":null};
-const confVolumetria = {"Brumed":null,"Fast Tennis":null,"Asia Source":null,"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":null,"Atend Já":null,"Maria Lavadeira":null,"Calzoon":null,"Locar X":null,"La Bolaria":null,"Mestre das Tintas":null,"Lypedepil":null};
-const confLeadTime   = {"Brumed":null,"Fast Tennis":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Atend Já":null,"Maria Lavadeira":null,"Calzoon":null,"Locar X":null,"La Bolaria":null,"Mestre das Tintas":null,"Lypedepil":null};
-const confCadencia   = {"Brumed":null,"Fast Tennis":null,"Asia Source":null,"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":null,"Atend Já":null,"Maria Lavadeira":null,"Calzoon":null,"Locar X":null,"La Bolaria":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Mestre das Tintas":null,"Lypedepil":null};
-const confgeral      = {"Brumed":{conf:69.6,nao:30.4,cor:0.0,modo:"geral"},"Fast Tennis":{conf:70.0,nao:30.0,cor:0.0,modo:"geral"},"Asia Source":{conf:93.3,nao:6.7,cor:0.0,modo:"geral"},"Doctor Fit":{conf:63.6,nao:36.4,cor:0.0,modo:"geral"},"Ecoville":{conf:77.8,nao:22.2,cor:0.0,modo:"geral"},"Airlocker":{conf:71.4,nao:28.6,cor:0.0,modo:"geral"},"Shelf":{conf:83.3,nao:0.0,cor:16.7,modo:"geral"},"4 Beach":{conf:80.0,nao:20.0,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Maria Lavadeira":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Locar X":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"La Bolaria":{conf:50.0,nao:50.0,cor:0.0,modo:"geral"},"Mestre das Tintas":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Lypedepil":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
+const confLigacao    = {"Brumed":{conf:69.6,nao:30.4,cor:0.0,modo:"lig"},"Fast Tennis":{conf:77.8,nao:22.2,cor:0.0,modo:"lig"},"Asia Source":{conf:93.3,nao:6.7,cor:0.0,modo:"lig"},"Doctor Fit":{conf:63.6,nao:36.4,cor:0.0,modo:"lig"},"Ecoville":{conf:77.8,nao:22.2,cor:0.0,modo:"lig"},"Airlocker":{conf:71.4,nao:28.6,cor:0.0,modo:"lig"},"Shelf":{conf:83.3,nao:0.0,cor:16.7,modo:"lig"},"4 Beach":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Maria Lavadeira":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Lypedepil":{conf:75.0,nao:25.0,cor:0.0,modo:"lig"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Locar X":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"La Bolaria":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Mestre das Tintas":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
+const confSpreadChat = {"Brumed":null,"Fast Tennis":null,"Asia Source":null,"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":null,"Atend Já":null,"Maria Lavadeira":null,"Lypedepil":null,"Calzoon":null,"Locar X":null,"La Bolaria":null,"Mestre das Tintas":null};
+const confVolumetria = {"Brumed":null,"Fast Tennis":null,"Asia Source":null,"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":null,"Atend Já":null,"Maria Lavadeira":null,"Lypedepil":null,"Calzoon":null,"Locar X":null,"La Bolaria":null,"Mestre das Tintas":null};
+const confLeadTime   = {"Brumed":null,"Fast Tennis":{conf:98,nao:100.0,cor:0.0,modo:"esp"},"Asia Source":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Atend Já":null,"Maria Lavadeira":null,"Lypedepil":null,"Calzoon":null,"Locar X":null,"La Bolaria":null,"Mestre das Tintas":null};
+const confCadencia   = {"Brumed":null,"Fast Tennis":null,"Asia Source":null,"Doctor Fit":null,"Ecoville":null,"Airlocker":null,"Shelf":null,"4 Beach":null,"Atend Já":null,"Maria Lavadeira":null,"Lypedepil":null,"Calzoon":null,"Locar X":null,"La Bolaria":{conf:99,nao:100.0,cor:0.0,modo:"esp"},"Mestre das Tintas":null};
+const confgeral      = {"Brumed":{conf:69.6,nao:30.4,cor:0.0,modo:"geral"},"Fast Tennis":{conf:70.0,nao:30.0,cor:0.0,modo:"geral"},"Asia Source":{conf:87.5,nao:12.5,cor:0.0,modo:"geral"},"Doctor Fit":{conf:63.6,nao:36.4,cor:0.0,modo:"geral"},"Ecoville":{conf:77.8,nao:22.2,cor:0.0,modo:"geral"},"Airlocker":{conf:71.4,nao:28.6,cor:0.0,modo:"geral"},"Shelf":{conf:83.3,nao:0.0,cor:16.7,modo:"geral"},"4 Beach":{conf:80.0,nao:20.0,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Maria Lavadeira":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Lypedepil":{conf:75.0,nao:25.0,cor:0.0,modo:"geral"},"Calzoon":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Locar X":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"La Bolaria":{conf:50.0,nao:50.0,cor:0.0,modo:"geral"},"Mestre das Tintas":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
 
 const marcasData = [
   {nome:"Brumed",d1:0,d7:4,d30:23,key:"pa-Brumed"},
-  {nome:"Fast Tennis",d1:3,d7:14,d30:20,key:"pa-FastTennis"},
-  {nome:"Asia Source",d1:0,d7:5,d30:15,key:"pa-AsiaSource"},
-  {nome:"Doctor Fit",d1:1,d7:2,d30:12,key:"pa-DoctorFit"},
+  {nome:"Fast Tennis",d1:1,d7:15,d30:21,key:"pa-FastTennis"},
+  {nome:"Asia Source",d1:1,d7:6,d30:16,key:"pa-AsiaSource"},
+  {nome:"Doctor Fit",d1:0,d7:1,d30:11,key:"pa-DoctorFit"},
   {nome:"Ecoville",d1:0,d7:5,d30:9,key:"pa-Ecoville"},
-  {nome:"Airlocker",d1:1,d7:2,d30:7,key:"pa-Airlocker"},
+  {nome:"Airlocker",d1:0,d7:2,d30:7,key:"pa-Airlocker"},
   {nome:"Shelf",d1:0,d7:0,d30:6,key:"pa-Shelf"},
   {nome:"4 Beach",d1:0,d7:4,d30:5,key:"pa-4Beach"},
   {nome:"Atend Já",d1:0,d7:1,d30:5,key:"pa-AtendJ"},
   {nome:"Maria Lavadeira",d1:0,d7:3,d30:5,key:"pa-MariaLavadeira"},
-  {nome:"Calzoon",d1:1,d7:1,d30:3,key:"pa-Calzoon"},
-  {nome:"Locar X",d1:0,d7:0,d30:2,key:"pa-LocarX"},
+  {nome:"Lypedepil",d1:1,d7:3,d30:4,key:"pa-Lypedepil"},
+  {nome:"Calzoon",d1:0,d7:1,d30:3,key:"pa-Calzoon"},
+  {nome:"Locar X",d1:1,d7:1,d30:3,key:"pa-LocarX"},
   {nome:"La Bolaria",d1:0,d7:1,d30:2,key:"pa-LaBolaria"},
   {nome:"Mestre das Tintas",d1:0,d7:0,d30:2,key:"pa-MestredasTintas"},
-  {nome:"Lypedepil",d1:0,d7:0,d30:1,key:"pa-Lypedepil"},
 ];
 const dirData = {
-  "Camaleões":{d7:109.2,d30:120.7},
-  "Fúria":{d7:192.5,d30:178.5},
-  "Guardiões":{d7:124.2,d30:133.4},
+  "Camaleões":{d7:109.2,d30:118.4},
+  "Fúria":{d7:184.0,d30:179.9},
+  "Guardiões":{d7:124.2,d30:132.1},
 };
 
 const mapaConf = {Ligacao:confLigacao,SpreadChat:confSpreadChat,Volumetria:confVolumetria,LeadTime:confLeadTime,Cadencia:confCadencia,geral:confgeral};
