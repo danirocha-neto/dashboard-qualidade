@@ -110,18 +110,18 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 <header>
   <div>
     <h1>Dashboard de Qualidade</h1>
-    <div class="sub">Referência: <strong>21/08/2026</strong> &nbsp;·&nbsp; D-1 = 21/08 &nbsp;·&nbsp; D-7 desde 12/08 &nbsp;·&nbsp; D-30 desde 10/07 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
+    <div class="sub">Referência: <strong>24/08/2026</strong> &nbsp;·&nbsp; D-1 = 24/08 &nbsp;·&nbsp; D-7 desde 13/08 &nbsp;·&nbsp; D-30 desde 13/07 &nbsp;·&nbsp; <em>fins de semana ignorados</em></div>
   </div>
-  <div class="badge">📊 1582 auditorias · 21/08/2026</div>
+  <div class="badge">📊 1605 auditorias · 24/08/2026</div>
 </header>
 
 <div class="section-quantitativa">
 <div class="section-label">Dados Quantitativos</div>
 <div class="metrics-row">
-  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">8</div><div class="metric-sub">21/08</div></div>
-  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">8</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
-  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">68</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
-  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">1582</div><div class="metric-sub">Aba Auditorias</div></div>
+  <div class="metric m-blue"><div class="metric-label">Auditorias D-1</div><div class="metric-value">23</div><div class="metric-sub">24/08</div></div>
+  <div class="metric m-green"><div class="metric-label">Auditorias D-7</div><div class="metric-value">31</div><div class="metric-sub">Últimos 7 dias úteis</div></div>
+  <div class="metric m-purple"><div class="metric-label">Auditorias D-30</div><div class="metric-value">83</div><div class="metric-sub">Últimos 30 dias úteis</div></div>
+  <div class="metric m-amber"><div class="metric-label">Total Auditorias 2026</div><div class="metric-value">1605</div><div class="metric-sub">Aba Auditorias</div></div>
   <div class="metric"><div class="metric-label">Planos de Ação</div><div class="metric-value" id="contador-planos">0</div><div class="metric-sub">preenchidos</div></div>
   <div class="metric m-pos"><div class="metric-label">Comportamentos +</div><div class="metric-value" id="contador-pos">0</div><div class="metric-sub">positivos</div></div>
   <div class="metric m-neg"><div class="metric-label">Comportamentos −</div><div class="metric-value" id="contador-neg">0</div><div class="metric-sub">negativos</div></div>
@@ -135,10 +135,10 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
       <thead><tr><th>Tipo</th><th class="r sep">D-1</th><th class="r sep">D-7</th><th class="r sep">D-30</th></tr></thead>
       <tbody><tr><td class="tl">Cadência</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
 <tr><td class="tl">Lead Time</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
-<tr><td class="tl">Ligação</td><td class="sep" style="text-align:right"><span class="tr">8</span></td><td class="tr sep"><span class="tr">8</span></td><td class="tr sep">68</td></tr>
+<tr><td class="tl">Ligação</td><td class="sep" style="text-align:right"><span class="tr">23</span></td><td class="tr sep"><span class="tr">31</span></td><td class="tr sep">83</td></tr>
 <tr><td class="tl">Spread.Chat</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
 <tr><td class="tl">Volumetria</td><td class="sep" style="text-align:right"><span class="tz">—</span></td><td class="tr sep"><span class="tz">—</span></td><td class="tr sep">0</td></tr>
-<tr class="tr-total"><td>Total</td><td class="tr sep">8</td><td class="tr sep">8</td><td class="tr sep">68</td></tr></tbody>
+<tr class="tr-total"><td>Total</td><td class="tr sep">23</td><td class="tr sep">31</td><td class="tr sep">83</td></tr></tbody>
     </table></div>
   </div>
 
@@ -253,7 +253,7 @@ footer{font-size:9px;color:var(--muted);text-align:center;padding:5px 0 2px;}
 </div>
 </div>
 
-<footer>Gerado automaticamente em 21/08/2026 · Dashboard de Qualidade · 1582 auditorias · fins de semana ignorados</footer>
+<footer>Gerado automaticamente em 24/08/2026 · Dashboard de Qualidade · 1605 auditorias · fins de semana ignorados</footer>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -280,36 +280,36 @@ async function fbLoad(k,def=''){
 const confTipoPeriodos = {
   d1: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:8,conf:87.5,nao:12.5,cor:0.0,modo:"pct"},
+    {tipo:"Ligação",tot:23,conf:87.0,nao:13.0,cor:0.0,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d7: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:8,conf:87.5,nao:12.5,cor:0.0,modo:"pct"},
+    {tipo:"Ligação",tot:31,conf:87.1,nao:12.9,cor:0.0,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}],
   d30: [{tipo:"Cadência",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Lead Time",tot:0,conf:null,nao:null,cor:null,modo:""},
-    {tipo:"Ligação",tot:68,conf:85.3,nao:10.3,cor:4.4,modo:"pct"},
+    {tipo:"Ligação",tot:83,conf:84.3,nao:12.0,cor:3.6,modo:"pct"},
     {tipo:"Spread.Chat",tot:0,conf:null,nao:null,cor:null,modo:""},
     {tipo:"Volumetria",tot:0,conf:null,nao:null,cor:null,modo:""}]
 };
 
-const confLigacao    = {"Brumed":{conf:82.4,nao:11.8,cor:5.9,modo:"lig"},"Fast Tennis":{conf:90.9,nao:0.0,cor:9.1,modo:"lig"},"La Bolaria":{conf:85.7,nao:14.3,cor:0.0,modo:"lig"},"Mestre da Obra":{conf:85.7,nao:14.3,cor:0.0,modo:"lig"},"Locar X":{conf:66.7,nao:16.7,cor:16.7,modo:"lig"},"Airlocker":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Ecoville":{conf:75.0,nao:25.0,cor:0.0,modo:"lig"},"NeoX Radiologia":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"4 Beach":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Doctor Fit":{conf:0.0,nao:100.0,cor:0.0,modo:"lig"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Shelf":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
-const confSpreadChat = {"Brumed":null,"Fast Tennis":null,"La Bolaria":null,"Mestre da Obra":null,"Locar X":null,"Airlocker":null,"Ecoville":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
-const confVolumetria = {"Brumed":null,"Fast Tennis":null,"La Bolaria":null,"Mestre da Obra":null,"Locar X":null,"Airlocker":null,"Ecoville":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
-const confLeadTime   = {"Brumed":null,"Fast Tennis":null,"La Bolaria":null,"Mestre da Obra":null,"Locar X":null,"Airlocker":null,"Ecoville":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
-const confCadencia   = {"Brumed":null,"Fast Tennis":null,"La Bolaria":null,"Mestre da Obra":null,"Locar X":null,"Airlocker":null,"Ecoville":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
-const confgeral      = {"Brumed":{conf:82.4,nao:11.8,cor:5.9,modo:"geral"},"Fast Tennis":{conf:90.9,nao:0.0,cor:9.1,modo:"geral"},"La Bolaria":{conf:85.7,nao:14.3,cor:0.0,modo:"geral"},"Mestre da Obra":{conf:85.7,nao:14.3,cor:0.0,modo:"geral"},"Locar X":{conf:66.7,nao:16.7,cor:16.7,modo:"geral"},"Airlocker":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Ecoville":{conf:75.0,nao:25.0,cor:0.0,modo:"geral"},"NeoX Radiologia":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"4 Beach":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Doctor Fit":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Shelf":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
+const confLigacao    = {"Brumed":{conf:77.8,nao:16.7,cor:5.6,modo:"lig"},"Fast Tennis":{conf:92.9,nao:0.0,cor:7.1,modo:"lig"},"Mestre da Obra":{conf:70.0,nao:30.0,cor:0.0,modo:"lig"},"La Bolaria":{conf:90.0,nao:10.0,cor:0.0,modo:"lig"},"Ecoville":{conf:90.0,nao:10.0,cor:0.0,modo:"lig"},"Locar X":{conf:60.0,nao:20.0,cor:20.0,modo:"lig"},"Airlocker":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"NeoX Radiologia":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"4 Beach":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Doctor Fit":{conf:0.0,nao:100.0,cor:0.0,modo:"lig"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"},"Shelf":{conf:100.0,nao:0.0,cor:0.0,modo:"lig"}};
+const confSpreadChat = {"Brumed":null,"Fast Tennis":null,"Mestre da Obra":null,"La Bolaria":null,"Ecoville":null,"Locar X":null,"Airlocker":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
+const confVolumetria = {"Brumed":null,"Fast Tennis":null,"Mestre da Obra":null,"La Bolaria":null,"Ecoville":null,"Locar X":null,"Airlocker":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
+const confLeadTime   = {"Brumed":null,"Fast Tennis":null,"Mestre da Obra":null,"La Bolaria":null,"Ecoville":null,"Locar X":null,"Airlocker":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
+const confCadencia   = {"Brumed":null,"Fast Tennis":null,"Mestre da Obra":null,"La Bolaria":null,"Ecoville":null,"Locar X":null,"Airlocker":null,"NeoX Radiologia":null,"Saúde Livre":null,"4 Beach":null,"Doctor Fit":null,"Açailand":null,"Atend Já":null,"Shelf":null};
+const confgeral      = {"Brumed":{conf:77.8,nao:16.7,cor:5.6,modo:"geral"},"Fast Tennis":{conf:92.9,nao:0.0,cor:7.1,modo:"geral"},"Mestre da Obra":{conf:70.0,nao:30.0,cor:0.0,modo:"geral"},"La Bolaria":{conf:90.0,nao:10.0,cor:0.0,modo:"geral"},"Ecoville":{conf:90.0,nao:10.0,cor:0.0,modo:"geral"},"Locar X":{conf:60.0,nao:20.0,cor:20.0,modo:"geral"},"Airlocker":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"NeoX Radiologia":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Saúde Livre":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"4 Beach":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Doctor Fit":{conf:0.0,nao:100.0,cor:0.0,modo:"geral"},"Açailand":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Atend Já":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"},"Shelf":{conf:100.0,nao:0.0,cor:0.0,modo:"geral"}};
 
 const marcasData = [
-  {nome:"Brumed",d1:3,d7:3,d30:17,key:"pa-Brumed"},
-  {nome:"Fast Tennis",d1:1,d7:1,d30:11,key:"pa-FastTennis"},
-  {nome:"La Bolaria",d1:2,d7:2,d30:7,key:"pa-LaBolaria"},
-  {nome:"Mestre da Obra",d1:2,d7:2,d30:7,key:"pa-MestredaObra"},
-  {nome:"Locar X",d1:0,d7:0,d30:6,key:"pa-LocarX"},
+  {nome:"Brumed",d1:1,d7:4,d30:18,key:"pa-Brumed"},
+  {nome:"Fast Tennis",d1:7,d7:8,d30:14,key:"pa-FastTennis"},
+  {nome:"Mestre da Obra",d1:4,d7:6,d30:10,key:"pa-MestredaObra"},
+  {nome:"La Bolaria",d1:4,d7:6,d30:10,key:"pa-LaBolaria"},
+  {nome:"Ecoville",d1:7,d7:7,d30:10,key:"pa-Ecoville"},
+  {nome:"Locar X",d1:0,d7:0,d30:5,key:"pa-LocarX"},
   {nome:"Airlocker",d1:0,d7:0,d30:4,key:"pa-Airlocker"},
-  {nome:"Ecoville",d1:0,d7:0,d30:4,key:"pa-Ecoville"},
   {nome:"NeoX Radiologia",d1:0,d7:0,d30:3,key:"pa-NeoXRadiologia"},
   {nome:"Saúde Livre",d1:0,d7:0,d30:3,key:"pa-SadeLivre"},
   {nome:"4 Beach",d1:0,d7:0,d30:2,key:"pa-4Beach"},
@@ -319,9 +319,9 @@ const marcasData = [
   {nome:"Shelf",d1:0,d7:0,d30:1,key:"pa-Shelf"},
 ];
 const dirData = {
-  "Camaleões":{d7:null,d30:126.5},
-  "Fúria":{d7:119.3,d30:145.0},
-  "Guardiões":{d7:129.1,d30:127.4},
+  "Camaleões":{d7:null,d30:128.9},
+  "Fúria":{d7:98.3,d30:140.1},
+  "Guardiões":{d7:101.0,d30:122.5},
 };
 
 const mapaConf = {Ligacao:confLigacao,SpreadChat:confSpreadChat,Volumetria:confVolumetria,LeadTime:confLeadTime,Cadencia:confCadencia,geral:confgeral};
